@@ -65,6 +65,19 @@ export default function Sandbox(props: Props = {}) {
           /api/v1/warehouses
         </Button>
       </div>
+      <div class="flex w-2/3">
+        <Button
+          onClick={async () => {
+            const res = await fetch("/api/v1/warehouses/38w8vihvxlxh1x4", {
+              credentials: "include",
+            });
+            const warehouse = await res.json();
+            setOutput(JSON.stringify(warehouse, null, 2));
+          }}
+        >
+          /api/v1/warehouses/38w8vihvxlxh1x4
+        </Button>
+      </div>
       <pre class="bg-purple-200 w-2/3 h-96 overflow-auto">{output}</pre>
     </div>
   );
