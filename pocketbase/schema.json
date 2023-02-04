@@ -1,0 +1,780 @@
+[
+    {
+        "id": "_pb_users_auth_",
+        "name": "users",
+        "type": "auth",
+        "system": false,
+        "schema": [
+            {
+                "id": "users_name",
+                "name": "name",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "users_avatar",
+                "name": "avatar",
+                "type": "file",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif",
+                        "image/webp"
+                    ],
+                    "thumbs": null
+                }
+            }
+        ],
+        "listRule": "id = @request.auth.id",
+        "viewRule": "id = @request.auth.id",
+        "createRule": "",
+        "updateRule": "id = @request.auth.id",
+        "deleteRule": "id = @request.auth.id",
+        "options": {
+            "allowEmailAuth": true,
+            "allowOAuth2Auth": true,
+            "allowUsernameAuth": true,
+            "exceptEmailDomains": null,
+            "manageRule": null,
+            "minPasswordLength": 8,
+            "onlyEmailDomains": null,
+            "requireEmail": false
+        }
+    },
+    {
+        "id": "hz2bw7wjh4jp3fc",
+        "name": "warehouses",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "f7v1djns",
+                "name": "label",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": null,
+        "updateRule": "@request.auth.id != \"\"",
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "ld3rf0t2xsn659e",
+        "name": "items",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "zeen6huw",
+                "name": "parent_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ld3rf0t2xsn659e",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "75kespiz",
+                "name": "sku",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "iv7dlkj0",
+                "name": "label",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "gtlvguts",
+                "name": "unit_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ly1jvrckq3qlv66",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "34fittji",
+                "name": "unit_price",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "ecxxg2ay",
+                "name": "expiry_secs",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "vlq3zrur",
+                "name": "description",
+                "type": "editor",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {}
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "ua82mizhwhs2f9c",
+        "name": "tags",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "t3r3tlkq",
+                "name": "label",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\"",
+        "deleteRule": "@request.auth.id != \"\"",
+        "options": {}
+    },
+    {
+        "id": "j6hruf8977e4pxd",
+        "name": "item_tags",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "bwejslab",
+                "name": "item_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ld3rf0t2xsn659e",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "ksch0cov",
+                "name": "tag_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ua82mizhwhs2f9c",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\"",
+        "deleteRule": "@request.auth.id != \"\"",
+        "options": {}
+    },
+    {
+        "id": "00wvt8yc3mhop2c",
+        "name": "recipes",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "ra2r2z0k",
+                "name": "item_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ld3rf0t2xsn659e",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "k7umwera",
+                "name": "label",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "wzyb950gpq9ufqn",
+        "name": "recipe_ingredients",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "vvimucbs",
+                "name": "recipe_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "00wvt8yc3mhop2c",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "huwzps41",
+                "name": "item_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ld3rf0t2xsn659e",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "0cdm1wqj",
+                "name": "quantity",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "ygdo0dxb",
+                "name": "unit_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ly1jvrckq3qlv66",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "ly1jvrckq3qlv66",
+        "name": "units",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "20evtma4",
+                "name": "label",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "w1sty88k",
+                "name": "shortlabel",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "xfamoyqlhk8ofiw",
+        "name": "warehouse_stocks",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "qtszyuun",
+                "name": "warehouse_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "hz2bw7wjh4jp3fc",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "h0kylz6b",
+                "name": "item_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ld3rf0t2xsn659e",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "4nwrffnz",
+                "name": "quantity",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "wvuts0qu",
+                "name": "unit_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ly1jvrckq3qlv66",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "f07tghdj",
+                "name": "unit_price",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "iln03xj9",
+                "name": "is_virtual",
+                "type": "bool",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {}
+            },
+            {
+                "id": "g5n04bje",
+                "name": "is_sellable",
+                "type": "bool",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {}
+            },
+            {
+                "id": "jsrmswqe",
+                "name": "expires",
+                "type": "date",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\"",
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "qvo25x64p2om1aj",
+        "name": "transfers",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "meamnicd",
+                "name": "from_warehouse_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "hz2bw7wjh4jp3fc",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "dgcypy4h",
+                "name": "into_warehouse_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "hz2bw7wjh4jp3fc",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "qencvjnr",
+                "name": "total_cost",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "6bqriytx",
+                "name": "description",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "evihvbnc",
+                "name": "is_committed",
+                "type": "bool",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {}
+            },
+            {
+                "id": "r5v4h5om",
+                "name": "scheduled",
+                "type": "date",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            },
+            {
+                "id": "bzikbi46",
+                "name": "updated_by",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "_pb_users_auth_",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\"",
+        "deleteRule": "@request.auth.id != \"\"",
+        "options": {}
+    },
+    {
+        "id": "owdlxgfneobsoug",
+        "name": "transfer_items",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "wozy6gyo",
+                "name": "transfer_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "qvo25x64p2om1aj",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "zrr6jfn0",
+                "name": "item_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ld3rf0t2xsn659e",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "wtbtzixw",
+                "name": "quantity",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "gbpgd56d",
+                "name": "unit_price",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "7eakgnnz",
+                "name": "total_price",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "3rdtvb8o",
+                "name": "unit_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ly1jvrckq3qlv66",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "eaomvbgp",
+                "name": "as_ingredient_of",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "owdlxgfneobsoug",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": [
+                        "transfer_id",
+                        "item_id"
+                    ]
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\"",
+        "deleteRule": "@request.auth.id != \"\"",
+        "options": {}
+    },
+    {
+        "id": "5o6zu5sl036uk42",
+        "name": "unit_conversions",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "x79ls3zp",
+                "name": "from_unit_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ly1jvrckq3qlv66",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "c7vvanoh",
+                "name": "into_unit_id",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "ly1jvrckq3qlv66",
+                    "cascadeDelete": true,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "id": "qorfajkd",
+                "name": "multiplier",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            }
+        ],
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    }
+]
