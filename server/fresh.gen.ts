@@ -5,20 +5,22 @@
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/api/v1/_middleware.ts";
 import * as $1 from "./routes/api/v1/authentication/index.ts";
-import * as $2 from "./routes/api/v1/warehouses/[id]/index.ts";
-import * as $3 from "./routes/api/v1/warehouses/index.ts";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/sandbox/index.tsx";
+import * as $2 from "./routes/api/v1/conversions/[from]/[into].ts";
+import * as $3 from "./routes/api/v1/warehouses/[id]/index.ts";
+import * as $4 from "./routes/api/v1/warehouses/index.ts";
+import * as $5 from "./routes/index.tsx";
+import * as $6 from "./routes/sandbox/index.tsx";
 import * as $$0 from "./islands/Sandbox.tsx";
 
 const manifest = {
   routes: {
     "./routes/api/v1/_middleware.ts": $0,
     "./routes/api/v1/authentication/index.ts": $1,
-    "./routes/api/v1/warehouses/[id]/index.ts": $2,
-    "./routes/api/v1/warehouses/index.ts": $3,
-    "./routes/index.tsx": $4,
-    "./routes/sandbox/index.tsx": $5,
+    "./routes/api/v1/conversions/[from]/[into].ts": $2,
+    "./routes/api/v1/warehouses/[id]/index.ts": $3,
+    "./routes/api/v1/warehouses/index.ts": $4,
+    "./routes/index.tsx": $5,
+    "./routes/sandbox/index.tsx": $6,
   },
   islands: {
     "./islands/Sandbox.tsx": $$0,
