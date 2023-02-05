@@ -1,4 +1,8 @@
+import type { Handlers } from "$fresh/server.ts";
+import type PocketBase from "pocketbase";
 import { PocketBaseModel } from "@/models/index.ts";
 import { CRUDFactory } from "@/utils/pocketbase.ts";
 
-export const handler = CRUDFactory.List(PocketBaseModel.WAREHOUSES);
+export const handler: Handlers<unknown, { pb: PocketBase }> = {
+    GET: CRUDFactory.List(PocketBaseModel.WAREHOUSES),
+};

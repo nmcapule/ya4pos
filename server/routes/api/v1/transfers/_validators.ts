@@ -2,7 +2,7 @@ import type { HandlerContext } from "$fresh/server.ts";
 import type PocketBase from "pocketbase";
 import { PocketBaseModel, Transfer } from "@/models/index.ts";
 
-/** Block transfer item updates if is_committed=true. */
+/** Block transfer item updates if current transfer is_committed=true. */
 export async function assertTransferNotCommitted(
     _req: Request,
     ctx: HandlerContext<void, { pb: PocketBase }>
