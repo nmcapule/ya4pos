@@ -1,5 +1,5 @@
 /** Name of PocketBase tables as defined in @/../pocketbase/schema.json. */
-export enum PocketBaseModels {
+export enum PocketBaseModel {
     USERS = "users",
     WAREHOUSES = "warehouses",
     WAREHOUSE_STOCKS = "warehouse_stocks",

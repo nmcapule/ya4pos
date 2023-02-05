@@ -1,14 +1,22 @@
 import type { HandlerContext } from "$fresh/server.ts";
 import type PocketBase from "pocketbase";
-import { PocketBaseModels } from "@/models/index.ts";
+import { PocketBaseModel } from "@/models/index.ts";
+import { searchParamsAsJSON } from "@/utils/pocketbase.ts";
 
 export const handler = async (
-    _req: Request,
+    req: Request,
     ctx: HandlerContext<void, { pb: PocketBase }>
 ) => {
-    const { id } = ctx.params;
+    // Override filters to add `warehouse_id` by default.
+    const url = new URL(req.url);
+    let filter = `warehouse_id="${ctx.params.id}"`;
+    if (url.searchParams.get("filter")) {
+        filter = `${filter} && (${url.searchParams.get("filter")})`;
+    }
+    url.searchParams.set("filter", filter);
+
     const res = await ctx.state.pb
-        .collection(PocketBaseModels.WAREHOUSE_STOCKS)
-        .getFullList(null, { filter: `warehouse_id="${id}"` });
+        .collection(PocketBaseModel.WAREHOUSE_STOCKS)
+        .getFullList(null, searchParamsAsJSON(url.searchParams));
     return new Response(JSON.stringify(res));
 };

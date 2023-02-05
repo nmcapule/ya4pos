@@ -1,6 +1,6 @@
 import type { MiddlewareHandlerContext } from "$fresh/server.ts";
 import config from "@/utils/config.ts";
-import { PocketBaseModels } from "@/models/index.ts";
+import { PocketBaseModel } from "@/models/index.ts";
 import PocketBase from "pocketbase";
 
 interface State {
@@ -18,7 +18,7 @@ export async function handler(
     // If auth store is no longer valid, try refreshing the token.
     if (!ctx.state.pb.authStore.isValid) {
         try {
-            await ctx.state.pb.collection(PocketBaseModels.USERS).authRefresh();
+            await ctx.state.pb.collection(PocketBaseModel.USERS).authRefresh();
         } catch (_) {
             // If can't refresh, just clear the auth store then.
             ctx.state.pb.authStore.clear();

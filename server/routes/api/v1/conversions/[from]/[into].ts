@@ -1,6 +1,6 @@
 import type { HandlerContext, PageProps } from "$fresh/server.ts";
 import type PocketBase from "pocketbase";
-import { PocketBaseModels } from "@/models/index.ts";
+import { PocketBaseModel } from "@/models/index.ts";
 
 /** JSON structure of conversion schema. */
 interface Conversion {
@@ -78,7 +78,7 @@ export const handler = async (
 ): Promise<Response> => {
     const { from, into } = ctx.params;
     const conversions: Conversion[] = await ctx.state.pb
-        .collection(PocketBaseModels.UNIT_CONVERSIONS)
+        .collection(PocketBaseModel.UNIT_CONVERSIONS)
         .getFullList();
     try {
         const conversion: Conversion = {
