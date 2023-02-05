@@ -8,15 +8,16 @@ interface Conversion {
     into_unit_id: string;
 }
 
-export const handler = async (
-    _req: Request,
-    ctx: HandlerContext<PageProps, { pb: PocketBase }>
-) => {
-    const { from, into } = ctx.params;
-    const conversions: Conversion[] = await ctx.state.pb
-        .collection("unit_conversions")
-        .getFullList();
-
+/**
+ * Calculates the multiplier from unit id `from` into unit id `into`. Tries
+ * to find the shortest connected path from `from` into `into`, using the
+ * inputted conversions list.
+ */
+function multiplierOf(
+    conversions: Conversion[],
+    from: string,
+    into: string
+): number {
     // Build a full two-way lookup table of unit conversions.
     const lookup = conversions.reduce((acc, curr) => {
         acc.set(
@@ -56,9 +57,9 @@ export const handler = async (
             }
         }
     }
-    // Build the BFS path if found.
+    // Calculate the stacked multiplier if a conversion path is found.
     if (!backtrack.has(into)) {
-        return new Response("no conversion found", { status: 400 });
+        throw "no conversion found";
     }
     let multiplier = 1;
     let curr = into;
@@ -67,11 +68,25 @@ export const handler = async (
         multiplier *= lookup.get(prev)?.get(curr) || 0;
         curr = prev;
     }
-    // Build virtual conversion object.
-    const conversion: Conversion = {
-        from_unit_id: from,
-        into_unit_id: into,
-        multiplier: multiplier,
-    };
-    return new Response(JSON.stringify(conversion));
+    return multiplier;
+}
+
+export const handler = async (
+    _req: Request,
+    ctx: HandlerContext<PageProps, { pb: PocketBase }>
+): Promise<Response> => {
+    const { from, into } = ctx.params;
+    const conversions: Conversion[] = await ctx.state.pb
+        .collection("unit_conversions")
+        .getFullList();
+    try {
+        const conversion: Conversion = {
+            from_unit_id: from,
+            into_unit_id: into,
+            multiplier: multiplierOf(conversions, from, into),
+        };
+        return new Response(JSON.stringify(conversion));
+    } catch (e) {
+        return new Response(e, { status: 400 });
+    }
 };
