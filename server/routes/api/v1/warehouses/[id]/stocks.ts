@@ -7,7 +7,7 @@ export const handler = async (
     ctx: HandlerContext<void, { pb: PocketBase }>
 ) => {
     const res = await ctx.state.pb
-        .collection(PocketBaseModels.WAREHOUSES)
+        .collection(PocketBaseModels.WAREHOUSE_STOCKS)
         .getFullList();
     return new Response(JSON.stringify(res));
 };
