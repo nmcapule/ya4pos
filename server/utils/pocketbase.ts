@@ -11,16 +11,32 @@ export function searchParamsAsJSON(searchParams: URLSearchParams): {
     return res;
 }
 
-interface Options<J = any> {
+/** A validator function. */
+export type Validator<T = void> = (
+    req: Request,
+    ctx: HandlerContext<T, { pb: PocketBase }>
+) => Promise<void> | void;
+
+/** Creates an assert that throws an error if the input expr is false. */
+export function assertExpression<T>(
+    expr: (_: T) => boolean,
+    err = "Assertion validator failed!"
+): Validator {
+    return async (req, _ctx) => {
+        const payload: T = await req.clone().json();
+        if (!expr(payload)) throw err;
+    };
+}
+
+/** Custom options for all generic CRUD pocketbase functions. */
+interface Options<J = unknown> {
     id?: string;
     mutators?: {
         params?: (_: Record<string, string>) => Record<string, string>;
         filter?: (_: string) => string;
         payload?: (_: J) => J;
     };
-    validators?: {
-        payload?: (_: J) => Promise<void> | void;
-    };
+    validators?: Validator[];
 }
 
 /** Composes a single filter out of multiple string filters. */
@@ -37,7 +53,9 @@ function apply<T>(fn: ((_: T) => T) | null | undefined, v: T, fallback?: T): T {
     return fn(v);
 }
 
+/** Creates quick templated pocketbase CRUD handlers. */
 export const CRUDFactory = {
+    /** Retrieves a list of pocketbase records. */
     List(collection: PocketBaseModel, options: Options = {}) {
         return async (
             req: Request,
@@ -46,6 +64,7 @@ export const CRUDFactory = {
             const query = searchParamsAsJSON(new URL(req.url).searchParams);
             query.filter = apply(options?.mutators?.filter, query.filter, "");
             ctx.params = apply(options?.mutators?.params, ctx.params);
+            options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
                 .collection(collection)
@@ -53,6 +72,7 @@ export const CRUDFactory = {
             return new Response(JSON.stringify(res));
         };
     },
+    /** Views a single pocketbase record. */
     View(collection: PocketBaseModel, options: Options = {}) {
         return async (
             req: Request,
@@ -60,6 +80,7 @@ export const CRUDFactory = {
         ) => {
             const query = searchParamsAsJSON(new URL(req.url).searchParams);
             ctx.params = apply(options?.mutators?.params, ctx.params);
+            options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
                 .collection(collection)
@@ -67,6 +88,7 @@ export const CRUDFactory = {
             return new Response(JSON.stringify(res));
         };
     },
+    /** Creates a pocketbase record. */
     Create(collection: PocketBaseModel, options: Options = {}) {
         return async (
             req: Request,
@@ -74,13 +96,7 @@ export const CRUDFactory = {
         ) => {
             ctx.params = apply(options?.mutators?.params, ctx.params);
             const payload = apply(options?.mutators?.payload, await req.json());
-            if (options?.validators?.payload) {
-                try {
-                    await options.validators.payload(payload);
-                } catch (e) {
-                    return new Response(e, { status: 400 });
-                }
-            }
+            options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
                 .collection(collection)
@@ -88,6 +104,7 @@ export const CRUDFactory = {
             return new Response(JSON.stringify(res));
         };
     },
+    /** Updates a pocketbase record. */
     Update(collection: PocketBaseModel, options: Options = {}) {
         return async (
             req: Request,
@@ -95,13 +112,7 @@ export const CRUDFactory = {
         ) => {
             ctx.params = apply(options?.mutators?.params, ctx.params);
             const payload = apply(options?.mutators?.payload, await req.json());
-            if (options?.validators?.payload) {
-                try {
-                    await options.validators.payload(payload);
-                } catch (e) {
-                    return new Response(e, { status: 400 });
-                }
-            }
+            options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
                 .collection(collection)
@@ -109,12 +120,14 @@ export const CRUDFactory = {
             return new Response(JSON.stringify(res));
         };
     },
+    /** Deletes a pocketbase record. */
     Delete(collection: PocketBaseModel, options: Options = {}) {
         return async (
-            _req: Request,
+            req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
         ) => {
             ctx.params = apply(options?.mutators?.params, ctx.params);
+            options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
                 .collection(collection)
