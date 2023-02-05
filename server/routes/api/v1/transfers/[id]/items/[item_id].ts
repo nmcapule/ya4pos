@@ -1,15 +1,7 @@
 import type { Handlers, HandlerContext } from "$fresh/server.ts";
 import type PocketBase from "pocketbase";
-import { PocketBaseModel } from "@/models/index.ts";
+import { PocketBaseModel, Transfer, TransferItem } from "@/models/index.ts";
 import { composeFilters, CRUDFactory } from "@/utils/pocketbase.ts";
-
-interface Transfer {
-    is_committed?: boolean;
-}
-
-interface TransferItem {
-    transfer_id?: string;
-}
 
 export const handler: Handlers<unknown, { pb: PocketBase }> = {
     async GET(req: Request, ctx: HandlerContext<void, { pb: PocketBase }>) {

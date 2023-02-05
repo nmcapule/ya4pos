@@ -13,3 +13,11 @@ export enum PocketBaseModel {
     TRANSFERS = "transfers",
     TRANSFER_ITEMS = "transfer_items",
 }
+
+export interface Transfer {
+    is_committed?: boolean;
+}
+
+export interface TransferItem {
+    transfer_id?: string;
+}
