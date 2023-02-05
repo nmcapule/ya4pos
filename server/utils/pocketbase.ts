@@ -36,6 +36,17 @@ export const CRUDFactory = {
             return new Response(JSON.stringify(res));
         };
     },
+    Create(collection: PocketBaseModel) {
+        return async (
+            req: Request,
+            ctx: HandlerContext<void, { pb: PocketBase }>
+        ) => {
+            const res = await ctx.state.pb
+                .collection(collection)
+                .create(await req.json());
+            return new Response(JSON.stringify(res));
+        };
+    },
     Update(collection: PocketBaseModel) {
         return async (
             req: Request,
