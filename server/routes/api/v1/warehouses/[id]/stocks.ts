@@ -6,8 +6,9 @@ export const handler = async (
     _req: Request,
     ctx: HandlerContext<void, { pb: PocketBase }>
 ) => {
+    const { id } = ctx.params;
     const res = await ctx.state.pb
         .collection(PocketBaseModels.WAREHOUSE_STOCKS)
-        .getFullList();
+        .getFullList(null, { filter: `warehouse_id="${id}"` });
     return new Response(JSON.stringify(res));
 };
