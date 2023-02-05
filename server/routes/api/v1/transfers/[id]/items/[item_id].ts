@@ -3,7 +3,7 @@ import type PocketBase from "pocketbase";
 import { PocketBaseModel } from "@/models/index.ts";
 import { composeFilters, CRUDFactory } from "@/utils/pocketbase.ts";
 import {
-    assertNoUpdateTransferId,
+    assertSameTransferId,
     assertTransferNotCommitted,
 } from "@/routes/api/v1/transfers/_validators.ts";
 
@@ -17,16 +17,12 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
             },
         })(req, ctx);
     },
-    async PUT(req: Request, ctx: HandlerContext<void, { pb: PocketBase }>) {
-        return await CRUDFactory.Update(PocketBaseModel.TRANSFER_ITEMS, {
-            id: "item_id",
-            validators: [assertTransferNotCommitted, assertNoUpdateTransferId],
-        })(req, ctx);
-    },
-    async DELETE(req: Request, ctx: HandlerContext<void, { pb: PocketBase }>) {
-        return await CRUDFactory.Delete(PocketBaseModel.TRANSFER_ITEMS, {
-            id: "item_id",
-            validators: [assertTransferNotCommitted],
-        })(req, ctx);
-    },
+    PUT: CRUDFactory.Update(PocketBaseModel.TRANSFER_ITEMS, {
+        id: "item_id",
+        validators: [assertTransferNotCommitted, assertSameTransferId],
+    }),
+    DELETE: CRUDFactory.Delete(PocketBaseModel.TRANSFER_ITEMS, {
+        id: "item_id",
+        validators: [assertTransferNotCommitted],
+    }),
 };

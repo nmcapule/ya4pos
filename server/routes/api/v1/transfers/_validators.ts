@@ -15,8 +15,8 @@ export async function assertTransferNotCommitted(
     }
 }
 
-/** Block updates to transfer_id. */
-export async function assertNoUpdateTransferId(
+/** Block updates to transfer_id that is not equal to parent transfer. */
+export async function assertSameTransferId(
     req: Request,
     ctx: HandlerContext<void, { pb: PocketBase }>
 ) {
