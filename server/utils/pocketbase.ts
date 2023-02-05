@@ -56,7 +56,7 @@ function apply<T>(fn: ((_: T) => T) | null | undefined, v: T, fallback?: T): T {
 /** Creates quick templated pocketbase CRUD handlers. */
 export const CRUDFactory = {
     /** Retrieves a list of pocketbase records. */
-    List(collection: PocketBaseModel, options: Options = {}) {
+    List<J>(collection: PocketBaseModel, options: Options<J> = {}) {
         return async (
             req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
@@ -73,7 +73,7 @@ export const CRUDFactory = {
         };
     },
     /** Views a single pocketbase record. */
-    View(collection: PocketBaseModel, options: Options = {}) {
+    View<J>(collection: PocketBaseModel, options: Options<J> = {}) {
         return async (
             req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
@@ -89,7 +89,7 @@ export const CRUDFactory = {
         };
     },
     /** Creates a pocketbase record. */
-    Create(collection: PocketBaseModel, options: Options = {}) {
+    Create<J>(collection: PocketBaseModel, options: Options<J> = {}) {
         return async (
             req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
@@ -105,7 +105,7 @@ export const CRUDFactory = {
         };
     },
     /** Updates a pocketbase record. */
-    Update(collection: PocketBaseModel, options: Options = {}) {
+    Update<J>(collection: PocketBaseModel, options: Options<J> = {}) {
         return async (
             req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
@@ -121,7 +121,7 @@ export const CRUDFactory = {
         };
     },
     /** Deletes a pocketbase record. */
-    Delete(collection: PocketBaseModel, options: Options = {}) {
+    Delete<J>(collection: PocketBaseModel, options: Options<J> = {}) {
         return async (
             req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
