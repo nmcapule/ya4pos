@@ -14,10 +14,17 @@ export enum PocketBaseModel {
     TRANSFER_ITEMS = "transfer_items",
 }
 
-export interface Transfer {
+export interface Transfer extends Record<string, unknown> {
+    id?: string;
+    from_warehouse_id?: string;
+    into_warehouse_id?: string;
+    total_cost?: number;
+    description?: string;
     is_committed?: boolean;
+    scheduled?: string;
+    updated_by?: string;
 }
 
-export interface TransferItem {
+export interface TransferItem extends Record<string, unknown> {
     transfer_id?: string;
 }

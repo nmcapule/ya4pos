@@ -32,11 +32,10 @@ export function assertExpression<T>(
 interface Options<J = unknown> {
     id?: string;
     mutators?: {
-        params?: (_: Record<string, string>) => Record<string, string>;
         filter?: (_: string) => string;
-        payload?: (_: J) => J;
     };
     validators?: Validator[];
+    proc?: (_: J) => J;
 }
 
 /** Composes a single filter out of multiple string filters. */
@@ -63,7 +62,6 @@ export const CRUDFactory = {
         ) => {
             const query = searchParamsAsJSON(new URL(req.url).searchParams);
             query.filter = apply(options?.mutators?.filter, query.filter, "");
-            ctx.params = apply(options?.mutators?.params, ctx.params);
             options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
@@ -79,7 +77,6 @@ export const CRUDFactory = {
             ctx: HandlerContext<void, { pb: PocketBase }>
         ) => {
             const query = searchParamsAsJSON(new URL(req.url).searchParams);
-            ctx.params = apply(options?.mutators?.params, ctx.params);
             options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
@@ -94,10 +91,9 @@ export const CRUDFactory = {
             req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
         ) => {
-            ctx.params = apply(options?.mutators?.params, ctx.params);
-            const payload = apply(options?.mutators?.payload, await req.json());
             options?.validators?.forEach((fn) => fn(req, ctx));
 
+            const payload = apply(options?.proc, await req.json());
             const res = await ctx.state.pb
                 .collection(collection)
                 .create(payload);
@@ -110,10 +106,9 @@ export const CRUDFactory = {
             req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
         ) => {
-            ctx.params = apply(options?.mutators?.params, ctx.params);
-            const payload = apply(options?.mutators?.payload, await req.json());
             options?.validators?.forEach((fn) => fn(req, ctx));
 
+            const payload = apply(options?.proc, await req.json());
             const res = await ctx.state.pb
                 .collection(collection)
                 .update(ctx.params.id, payload);
@@ -126,7 +121,6 @@ export const CRUDFactory = {
             req: Request,
             ctx: HandlerContext<void, { pb: PocketBase }>
         ) => {
-            ctx.params = apply(options?.mutators?.params, ctx.params);
             options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
