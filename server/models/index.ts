@@ -18,7 +18,7 @@ export interface Transfer extends Record<string, unknown> {
     id?: string;
     from_warehouse_id?: string;
     into_warehouse_id?: string;
-    total_cost?: number;
+    overhead_cost?: number;
     description?: string;
     is_committed?: boolean;
     scheduled?: string;
@@ -26,5 +26,30 @@ export interface Transfer extends Record<string, unknown> {
 }
 
 export interface TransferItem extends Record<string, unknown> {
+    id?: string;
     transfer_id?: string;
+    item_id?: string;
+    quantity?: number;
+    unit_id?: string;
+    unit_price?: number;
+    total_price?: number;
+    is_virtual?: number;
+    as_ingredient_of?: string;
+}
+
+export interface WarehouseStock extends Record<string, unknown> {
+    warehouse_id?: string;
+    item_id?: string;
+    quantity?: number;
+    unit_id?: string;
+    unit_price?: number;
+    is_virtual?: boolean;
+    is_sellable?: boolean;
+    expires?: string;
+}
+
+export interface UnitConversion extends Record<string, unknown> {
+    from_unit_id?: string;
+    multiplier?: number;
+    into_unit_id?: string;
 }

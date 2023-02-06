@@ -13,10 +13,11 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
             id: "item_id",
             mutators: {
                 filter: (f) =>
-                    composeFilters([f, `transfer_id=${ctx.params.id}`]),
+                    composeFilters([f, `transfer_id="${ctx.params.id}"`]),
             },
         })(req, ctx);
     },
+    // TODO(nmcapule): If is_virtual, assemble ingredients.
     PUT: CRUDFactory.Update(PocketBaseModel.TRANSFER_ITEMS, {
         id: "item_id",
         validators: [assertTransferNotCommitted, assertSameTransferId],

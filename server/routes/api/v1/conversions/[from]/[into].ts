@@ -1,13 +1,6 @@
 import type { HandlerContext, PageProps } from "$fresh/server.ts";
 import type PocketBase from "pocketbase";
-import { PocketBaseModel } from "@/models/index.ts";
-
-/** JSON structure of conversion schema. */
-interface Conversion {
-    from_unit_id: string;
-    multiplier: number;
-    into_unit_id: string;
-}
+import { UnitConversion, PocketBaseModel } from "@/models/index.ts";
 
 /**
  * Calculates the multiplier from unit id `from` into unit id `into`. Tries
@@ -15,7 +8,7 @@ interface Conversion {
  * inputted conversions list.
  */
 function multiplierOf(
-    conversions: Conversion[],
+    conversions: UnitConversion[],
     from: string,
     into: string
 ): number {
@@ -27,17 +20,17 @@ function multiplierOf(
     // Build a full two-way lookup table of unit conversions.
     const lookup = conversions.reduce((acc, curr) => {
         acc.set(
-            curr.from_unit_id,
-            (acc.get(curr.from_unit_id) || new Map<string, number>()).set(
-                curr.into_unit_id,
-                curr.multiplier
+            curr.from_unit_id!,
+            (acc.get(curr.from_unit_id!) || new Map<string, number>()).set(
+                curr.into_unit_id!,
+                curr.multiplier!
             )
         );
         acc.set(
-            curr.into_unit_id,
-            (acc.get(curr.into_unit_id) || new Map<string, number>()).set(
-                curr.from_unit_id,
-                1 / curr.multiplier
+            curr.into_unit_id!,
+            (acc.get(curr.into_unit_id!) || new Map<string, number>()).set(
+                curr.from_unit_id!,
+                1 / curr.multiplier!
             )
         );
         return acc;
@@ -82,11 +75,11 @@ export const handler = async (
     ctx: HandlerContext<PageProps, { pb: PocketBase }>
 ): Promise<Response> => {
     const { from, into } = ctx.params;
-    const conversions: Conversion[] = await ctx.state.pb
+    const conversions: UnitConversion[] = await ctx.state.pb
         .collection(PocketBaseModel.UNIT_CONVERSIONS)
         .getFullList();
     try {
-        const conversion: Conversion = {
+        const conversion: UnitConversion = {
             from_unit_id: from,
             into_unit_id: into,
             multiplier: multiplierOf(conversions, from, into),

@@ -9,6 +9,7 @@ import {
 
 export const handler: Handlers<unknown, { pb: PocketBase }> = {
     GET: CRUDFactory.List(PocketBaseModel.TRANSFER_ITEMS),
+    // TODO(nmcapule): If is_virtual, assemble ingredients.
     POST: CRUDFactory.Create(PocketBaseModel.TRANSFER_ITEMS, {
         validators: [assertTransferNotCommitted, assertSameTransferId],
     }),

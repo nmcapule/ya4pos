@@ -35,7 +35,7 @@ interface Options<J = unknown> {
         filter?: (_: string) => string;
     };
     validators?: Validator[];
-    proc?: (_: J) => J;
+    proc?: (_: J, pb?: PocketBase) => Promise<J> | J;
 }
 
 /** Composes a single filter out of multiple string filters. */
@@ -47,9 +47,14 @@ export function composeFilters(filters: string[]): string {
 }
 
 /** Apply fn if it exists, otherwise, return original value. */
-function apply<T>(fn: ((_: T) => T) | null | undefined, v: T, fallback?: T): T {
+async function apply<T>(
+    fn: ((_: T, ...args: unknown[]) => Promise<T> | T) | null | undefined,
+    v: T,
+    fallback?: T,
+    ...args: unknown[]
+) {
     if (!fn) return v || fallback!;
-    return fn(v);
+    return await fn(v, ...args);
 }
 
 /** Creates quick templated pocketbase CRUD handlers. */
@@ -61,7 +66,11 @@ export const CRUDFactory = {
             ctx: HandlerContext<void, { pb: PocketBase }>
         ) => {
             const query = searchParamsAsJSON(new URL(req.url).searchParams);
-            query.filter = apply(options?.mutators?.filter, query.filter, "");
+            query.filter = await apply(
+                options?.mutators?.filter,
+                query.filter,
+                ""
+            );
             options?.validators?.forEach((fn) => fn(req, ctx));
 
             const res = await ctx.state.pb
@@ -93,7 +102,12 @@ export const CRUDFactory = {
         ) => {
             options?.validators?.forEach((fn) => fn(req, ctx));
 
-            const payload = apply(options?.proc, await req.json());
+            const payload = apply(
+                options?.proc,
+                await req.json(),
+                undefined,
+                ctx.state.pb
+            );
             const res = await ctx.state.pb
                 .collection(collection)
                 .create(payload);
@@ -108,7 +122,12 @@ export const CRUDFactory = {
         ) => {
             options?.validators?.forEach((fn) => fn(req, ctx));
 
-            const payload = apply(options?.proc, await req.json());
+            const payload = apply(
+                options?.proc,
+                await req.json(),
+                undefined,
+                ctx.state.pb
+            );
             const res = await ctx.state.pb
                 .collection(collection)
                 .update(ctx.params.id, payload);
