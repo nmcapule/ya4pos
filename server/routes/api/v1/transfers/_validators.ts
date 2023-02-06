@@ -11,7 +11,10 @@ export async function assertTransferNotCommitted(
         .collection(PocketBaseModel.TRANSFERS)
         .getOne(ctx.params.id);
     if (transfer.is_committed) {
-        throw `Cannot update transfer if already committed`;
+        throw (
+            "Cannot update transfer or transfer items since the transfer" +
+            "has already been committed"
+        );
     }
 }
 

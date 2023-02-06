@@ -19,6 +19,11 @@ function multiplierOf(
     from: string,
     into: string
 ): number {
+    // Short-circuit if from === into.
+    if (from === into) {
+        return 1;
+    }
+
     // Build a full two-way lookup table of unit conversions.
     const lookup = conversions.reduce((acc, curr) => {
         acc.set(
