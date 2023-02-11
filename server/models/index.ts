@@ -27,6 +27,7 @@ export interface Item {
 
 export interface Transfer {
     id?: string;
+    transaction_id?: string;
     from_warehouse_id?: string;
     into_warehouse_id?: string;
     overhead_cost?: number;
@@ -65,6 +66,7 @@ export interface UnitConversion {
 }
 
 export interface Transmute {
+    transaction_id?: string;
     recipe_id?: string;
     warehouse_id?: string;
     input_transfer_id?: string;

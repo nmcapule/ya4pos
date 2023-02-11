@@ -25,6 +25,7 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
             // Create transfer for output using recipe.
             const input = await createOutputTransfer(
                 pb,
+                transmute.transaction_id!,
                 transmute.warehouse_id!,
                 recipe.id!
             );
@@ -33,6 +34,7 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
             // Create transfer for input using recipe.
             const output = await createInputTransfer(
                 pb,
+                transmute.transaction_id!,
                 transmute.warehouse_id!,
                 recipe.item_id!
             );
@@ -58,12 +60,14 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
  */
 async function createOutputTransfer(
     pb: PocketBase,
+    transactionId: string,
     warehouseId: string,
     recipeId: string
 ): Promise<Transfer> {
     const transfer: Transfer = await pb
         .collection(PocketBaseModel.TRANSFERS)
         .create({
+            transaction_id: transactionId,
             from_warehouse_id: warehouseId,
         });
 
@@ -97,12 +101,14 @@ async function createOutputTransfer(
 /** Creates Transfer and TransferItem record for input warehouse and item. */
 async function createInputTransfer(
     pb: PocketBase,
+    transactionId: string,
     warehouseId: string,
     itemId: string
 ): Promise<Transfer> {
     const transfer: Transfer = await pb
         .collection(PocketBaseModel.TRANSFERS)
         .create({
+            transaction_id: transactionId,
             into_warehouse_id: warehouseId,
         });
     const item: Item = await pb

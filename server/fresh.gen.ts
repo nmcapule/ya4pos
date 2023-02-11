@@ -13,11 +13,12 @@ import * as $6 from "./routes/api/v1/transfers/[id]/items/[item_id].ts";
 import * as $7 from "./routes/api/v1/transfers/[id]/items/index.ts";
 import * as $8 from "./routes/api/v1/transfers/_validators.ts";
 import * as $9 from "./routes/api/v1/transfers/index.ts";
-import * as $10 from "./routes/api/v1/warehouses/[id]/index.ts";
-import * as $11 from "./routes/api/v1/warehouses/[id]/stocks.ts";
-import * as $12 from "./routes/api/v1/warehouses/index.ts";
-import * as $13 from "./routes/index.tsx";
-import * as $14 from "./routes/sandbox/index.tsx";
+import * as $10 from "./routes/api/v1/transmutes/index.ts";
+import * as $11 from "./routes/api/v1/warehouses/[id]/index.ts";
+import * as $12 from "./routes/api/v1/warehouses/[id]/stocks.ts";
+import * as $13 from "./routes/api/v1/warehouses/index.ts";
+import * as $14 from "./routes/index.tsx";
+import * as $15 from "./routes/sandbox/index.tsx";
 import * as $$0 from "./islands/Sandbox.tsx";
 
 const manifest = {
@@ -32,11 +33,12 @@ const manifest = {
     "./routes/api/v1/transfers/[id]/items/index.ts": $7,
     "./routes/api/v1/transfers/_validators.ts": $8,
     "./routes/api/v1/transfers/index.ts": $9,
-    "./routes/api/v1/warehouses/[id]/index.ts": $10,
-    "./routes/api/v1/warehouses/[id]/stocks.ts": $11,
-    "./routes/api/v1/warehouses/index.ts": $12,
-    "./routes/index.tsx": $13,
-    "./routes/sandbox/index.tsx": $14,
+    "./routes/api/v1/transmutes/index.ts": $10,
+    "./routes/api/v1/warehouses/[id]/index.ts": $11,
+    "./routes/api/v1/warehouses/[id]/stocks.ts": $12,
+    "./routes/api/v1/warehouses/index.ts": $13,
+    "./routes/index.tsx": $14,
+    "./routes/sandbox/index.tsx": $15,
   },
   islands: {
     "./islands/Sandbox.tsx": $$0,
