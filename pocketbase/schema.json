@@ -74,6 +74,15 @@
                     "max": null,
                     "pattern": ""
                 }
+            },
+            {
+                "id": "fkboylz9",
+                "name": "is_deleted",
+                "type": "bool",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {}
             }
         ],
         "listRule": "@request.auth.id != \"\"",
@@ -548,6 +557,20 @@
         "system": false,
         "schema": [
             {
+                "id": "iw6wfx3o",
+                "name": "transaction_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ej3pitrfk9wubg8",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
                 "id": "meamnicd",
                 "name": "from_warehouse_id",
                 "type": "relation",
@@ -796,6 +819,20 @@
         "system": false,
         "schema": [
             {
+                "id": "to6vm5rk",
+                "name": "transaction_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ej3pitrfk9wubg8",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
                 "id": "etdktgns",
                 "name": "recipe_id",
                 "type": "relation",
@@ -852,6 +889,113 @@
                     "cascadeDelete": false,
                     "maxSelect": 1,
                     "displayFields": []
+                }
+            }
+        ],
+        "listRule": null,
+        "viewRule": null,
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "ej3pitrfk9wubg8",
+        "name": "accounting_transactions",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "bvia8w6o",
+                "name": "description",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "69g7dj0s",
+                "name": "amount",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "yrswotl9",
+                "name": "from_entity_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "8nbs1cd6oyf5k4m",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "x6g7mxlx",
+                "name": "into_entity_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "8nbs1cd6oyf5k4m",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            }
+        ],
+        "listRule": null,
+        "viewRule": null,
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "8nbs1cd6oyf5k4m",
+        "name": "accounting_entities",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "x0ujrynt",
+                "name": "label",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "flogpcey",
+                "name": "description",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
                 }
             }
         ],

@@ -1,5 +1,7 @@
 /** Name of PocketBase tables as defined in @/../pocketbase/schema.json. */
 export enum PocketBaseModel {
+    ACCOUNTING_ENTITIES = "accounting_entities",
+    ACCOUNTING_TRANSACTIONS = "accounting_transactions",
     ITEM_TAGS = "item_tags",
     ITEMS = "items",
     RECIPE_INGREDIENTS = "recipe_ingredients",
@@ -84,4 +86,17 @@ export interface RecipeIngredient {
     item_id?: string;
     quantity?: number;
     unit_id?: string;
+}
+
+export interface AccountingEntity {
+    id?: string;
+    label?: string;
+    description?: string;
+}
+
+export interface AccountingTransaction {
+    description?: string;
+    amount?: number;
+    from_entity_id?: string;
+    into_entity_id?: string;
 }

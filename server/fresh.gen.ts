@@ -7,18 +7,20 @@ import * as $0 from "./routes/api/v1/_middleware.ts";
 import * as $1 from "./routes/api/v1/authentication/index.ts";
 import * as $2 from "./routes/api/v1/conversions/[from]/[into].ts";
 import * as $3 from "./routes/api/v1/conversions/_multiplier_of.ts";
-import * as $4 from "./routes/api/v1/transfers/[id]/_commit.ts";
-import * as $5 from "./routes/api/v1/transfers/[id]/index.ts";
-import * as $6 from "./routes/api/v1/transfers/[id]/items/[item_id].ts";
-import * as $7 from "./routes/api/v1/transfers/[id]/items/index.ts";
-import * as $8 from "./routes/api/v1/transfers/_validators.ts";
-import * as $9 from "./routes/api/v1/transfers/index.ts";
-import * as $10 from "./routes/api/v1/transmutes/index.ts";
-import * as $11 from "./routes/api/v1/warehouses/[id]/index.ts";
-import * as $12 from "./routes/api/v1/warehouses/[id]/stocks.ts";
-import * as $13 from "./routes/api/v1/warehouses/index.ts";
-import * as $14 from "./routes/index.tsx";
-import * as $15 from "./routes/sandbox/index.tsx";
+import * as $4 from "./routes/api/v1/transactions/[id]/index.ts";
+import * as $5 from "./routes/api/v1/transactions/index.ts";
+import * as $6 from "./routes/api/v1/transfers/[id]/_commit.ts";
+import * as $7 from "./routes/api/v1/transfers/[id]/index.ts";
+import * as $8 from "./routes/api/v1/transfers/[id]/items/[item_id].ts";
+import * as $9 from "./routes/api/v1/transfers/[id]/items/index.ts";
+import * as $10 from "./routes/api/v1/transfers/_validators.ts";
+import * as $11 from "./routes/api/v1/transfers/index.ts";
+import * as $12 from "./routes/api/v1/transmutes/index.ts";
+import * as $13 from "./routes/api/v1/warehouses/[id]/index.ts";
+import * as $14 from "./routes/api/v1/warehouses/[id]/stocks.ts";
+import * as $15 from "./routes/api/v1/warehouses/index.ts";
+import * as $16 from "./routes/index.tsx";
+import * as $17 from "./routes/sandbox/index.tsx";
 import * as $$0 from "./islands/Sandbox.tsx";
 
 const manifest = {
@@ -27,18 +29,20 @@ const manifest = {
     "./routes/api/v1/authentication/index.ts": $1,
     "./routes/api/v1/conversions/[from]/[into].ts": $2,
     "./routes/api/v1/conversions/_multiplier_of.ts": $3,
-    "./routes/api/v1/transfers/[id]/_commit.ts": $4,
-    "./routes/api/v1/transfers/[id]/index.ts": $5,
-    "./routes/api/v1/transfers/[id]/items/[item_id].ts": $6,
-    "./routes/api/v1/transfers/[id]/items/index.ts": $7,
-    "./routes/api/v1/transfers/_validators.ts": $8,
-    "./routes/api/v1/transfers/index.ts": $9,
-    "./routes/api/v1/transmutes/index.ts": $10,
-    "./routes/api/v1/warehouses/[id]/index.ts": $11,
-    "./routes/api/v1/warehouses/[id]/stocks.ts": $12,
-    "./routes/api/v1/warehouses/index.ts": $13,
-    "./routes/index.tsx": $14,
-    "./routes/sandbox/index.tsx": $15,
+    "./routes/api/v1/transactions/[id]/index.ts": $4,
+    "./routes/api/v1/transactions/index.ts": $5,
+    "./routes/api/v1/transfers/[id]/_commit.ts": $6,
+    "./routes/api/v1/transfers/[id]/index.ts": $7,
+    "./routes/api/v1/transfers/[id]/items/[item_id].ts": $8,
+    "./routes/api/v1/transfers/[id]/items/index.ts": $9,
+    "./routes/api/v1/transfers/_validators.ts": $10,
+    "./routes/api/v1/transfers/index.ts": $11,
+    "./routes/api/v1/transmutes/index.ts": $12,
+    "./routes/api/v1/warehouses/[id]/index.ts": $13,
+    "./routes/api/v1/warehouses/[id]/stocks.ts": $14,
+    "./routes/api/v1/warehouses/index.ts": $15,
+    "./routes/index.tsx": $16,
+    "./routes/sandbox/index.tsx": $17,
   },
   islands: {
     "./islands/Sandbox.tsx": $$0,
