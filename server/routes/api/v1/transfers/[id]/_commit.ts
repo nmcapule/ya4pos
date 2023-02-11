@@ -67,7 +67,6 @@ async function createStocks(
                     quantity: item.quantity,
                     unit_id: item.unit_id,
                     unit_price: item.unit_price,
-                    is_virtual: item.is_virtual,
                     // TODO(nmcapule): How to handle expiry.
                     // expires: item.
                 });

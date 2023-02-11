@@ -14,7 +14,7 @@ export enum PocketBaseModel {
     TRANSFER_ITEMS = "transfer_items",
 }
 
-export interface Transfer extends Record<string, unknown> {
+export interface Transfer {
     id?: string;
     from_warehouse_id?: string;
     into_warehouse_id?: string;
@@ -25,7 +25,7 @@ export interface Transfer extends Record<string, unknown> {
     updated_by?: string;
 }
 
-export interface TransferItem extends Record<string, unknown> {
+export interface TransferItem {
     id?: string;
     transfer_id?: string;
     item_id?: string;
@@ -35,7 +35,7 @@ export interface TransferItem extends Record<string, unknown> {
     total_price?: number;
 }
 
-export interface WarehouseStock extends Record<string, unknown> {
+export interface WarehouseStock {
     id?: string;
     warehouse_id?: string;
     item_id?: string;
@@ -47,7 +47,7 @@ export interface WarehouseStock extends Record<string, unknown> {
     expires?: string;
 }
 
-export interface UnitConversion extends Record<string, unknown> {
+export interface UnitConversion {
     from_unit_id?: string;
     multiplier?: number;
     into_unit_id?: string;
