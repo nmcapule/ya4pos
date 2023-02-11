@@ -113,7 +113,8 @@ async function consumeStocks(
     // less than or equal to zero, delete from the database instead.
     return Promise.all(
         Array.from(stocksToUpdate.entries()).map(async ([_, stock]) => {
-            if (stock.quantity! <= 0) {
+            // Clean up non-virtual stocks that have zero quantity.
+            if (!stock.is_virtual && stock.quantity! <= 0) {
                 return await pb
                     .collection(PocketBaseModel.WAREHOUSE_STOCKS)
                     .delete(stock.id);

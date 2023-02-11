@@ -104,12 +104,32 @@
                 }
             },
             {
+                "id": "zbfbub3s",
+                "name": "profile_image",
+                "type": "file",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif",
+                        "image/webp"
+                    ],
+                    "thumbs": []
+                }
+            },
+            {
                 "id": "75kespiz",
                 "name": "sku",
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
+                "unique": true,
                 "options": {
                     "min": null,
                     "max": null,
@@ -393,6 +413,15 @@
                     "max": null,
                     "pattern": ""
                 }
+            },
+            {
+                "id": "6tatverl",
+                "name": "is_standard",
+                "type": "bool",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {}
             }
         ],
         "listRule": "@request.auth.id != \"\"",
@@ -548,7 +577,7 @@
             },
             {
                 "id": "qencvjnr",
-                "name": "total_cost",
+                "name": "overhead_cost",
                 "type": "number",
                 "system": false,
                 "required": false,
@@ -661,6 +690,20 @@
                 }
             },
             {
+                "id": "3rdtvb8o",
+                "name": "unit_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ly1jvrckq3qlv66",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
                 "id": "gbpgd56d",
                 "name": "unit_price",
                 "type": "number",
@@ -682,37 +725,6 @@
                 "options": {
                     "min": null,
                     "max": null
-                }
-            },
-            {
-                "id": "3rdtvb8o",
-                "name": "unit_id",
-                "type": "relation",
-                "system": false,
-                "required": false,
-                "unique": false,
-                "options": {
-                    "collectionId": "ly1jvrckq3qlv66",
-                    "cascadeDelete": false,
-                    "maxSelect": 1,
-                    "displayFields": null
-                }
-            },
-            {
-                "id": "eaomvbgp",
-                "name": "as_ingredient_of",
-                "type": "relation",
-                "system": false,
-                "required": false,
-                "unique": false,
-                "options": {
-                    "collectionId": "owdlxgfneobsoug",
-                    "cascadeDelete": true,
-                    "maxSelect": 1,
-                    "displayFields": [
-                        "transfer_id",
-                        "item_id"
-                    ]
                 }
             }
         ],
@@ -744,6 +756,18 @@
                 }
             },
             {
+                "id": "qorfajkd",
+                "name": "multiplier",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
                 "id": "c7vvanoh",
                 "name": "into_unit_id",
                 "type": "relation",
@@ -756,22 +780,83 @@
                     "maxSelect": 1,
                     "displayFields": null
                 }
-            },
-            {
-                "id": "qorfajkd",
-                "name": "multiplier",
-                "type": "number",
-                "system": false,
-                "required": false,
-                "unique": false,
-                "options": {
-                    "min": null,
-                    "max": null
-                }
             }
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "zl3cz6yjzusscow",
+        "name": "transmutes",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "etdktgns",
+                "name": "recipe_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "00wvt8yc3mhop2c",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": [
+                        "item_id",
+                        "label"
+                    ]
+                }
+            },
+            {
+                "id": "8zn2eemd",
+                "name": "warehouse_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "hz2bw7wjh4jp3fc",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "zzjkaily",
+                "name": "input_transfer_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "qvo25x64p2om1aj",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "aiulgwtz",
+                "name": "output_transfer_id",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "qvo25x64p2om1aj",
+                    "cascadeDelete": false,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            }
+        ],
+        "listRule": null,
+        "viewRule": null,
         "createRule": null,
         "updateRule": null,
         "deleteRule": null,
