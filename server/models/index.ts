@@ -33,11 +33,10 @@ export interface TransferItem extends Record<string, unknown> {
     unit_id?: string;
     unit_price?: number;
     total_price?: number;
-    is_virtual?: number;
-    as_ingredient_of?: string;
 }
 
 export interface WarehouseStock extends Record<string, unknown> {
+    id?: string;
     warehouse_id?: string;
     item_id?: string;
     quantity?: number;
