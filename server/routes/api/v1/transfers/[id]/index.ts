@@ -19,7 +19,7 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
 
             // If toggling from !is_committed into is_committed, do a commit.
             if (update.is_committed && !current.is_committed) {
-                return await commit(pb, current, update);
+                return await commit(pb, update);
             }
             // Otherwise, do a simple update.
             return update;

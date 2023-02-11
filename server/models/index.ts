@@ -1,17 +1,28 @@
 /** Name of PocketBase tables as defined in @/../pocketbase/schema.json. */
 export enum PocketBaseModel {
-    USERS = "users",
-    WAREHOUSES = "warehouses",
-    WAREHOUSE_STOCKS = "warehouse_stocks",
-    ITEMS = "items",
-    TAGS = "tags",
     ITEM_TAGS = "item_tags",
-    RECIPES = "recipes",
+    ITEMS = "items",
     RECIPE_INGREDIENTS = "recipe_ingredients",
-    UNITS = "units",
-    UNIT_CONVERSIONS = "unit_conversions",
-    TRANSFERS = "transfers",
+    RECIPES = "recipes",
+    TAGS = "tags",
     TRANSFER_ITEMS = "transfer_items",
+    TRANSFERS = "transfers",
+    TRANSMUTES = "transmutes",
+    UNIT_CONVERSIONS = "unit_conversions",
+    UNITS = "units",
+    USERS = "users",
+    WAREHOUSE_STOCKS = "warehouse_stocks",
+    WAREHOUSES = "warehouses",
+}
+
+export interface Item {
+    id?: string;
+    sku?: string;
+    label?: string;
+    unit_id?: string;
+    unit_price?: number;
+    expiry_secs?: number;
+    description?: number;
 }
 
 export interface Transfer {
@@ -51,4 +62,24 @@ export interface UnitConversion {
     from_unit_id?: string;
     multiplier?: number;
     into_unit_id?: string;
+}
+
+export interface Transmute {
+    recipe_id?: string;
+    warehouse_id?: string;
+    input_transfer_id?: string;
+    output_transfer_id?: string;
+}
+
+export interface Recipe {
+    id?: string;
+    item_id?: string;
+    label?: string;
+}
+
+export interface RecipeIngredient {
+    recipe_id?: string;
+    item_id?: string;
+    quantity?: number;
+    unit_id?: string;
 }

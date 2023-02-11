@@ -17,18 +17,19 @@ export interface Options {
     mergeWithExistingStock?: boolean;
 }
 
-/** Commits a transfer record. */
+/**
+ * Commits a transfer record.
+ *
+ * This does not save the new transfer update into the database by default, so
+ * do that in the outside function.
+ */
 export async function commit(
     pb: PocketBase,
-    current: Transfer,
     update: Transfer,
     options?: Options
 ): Promise<Transfer> {
-    // Redundant check with PUT /api/v1/transfers/:id since this function will
-    // be designed as a reusable.
-    if (current.is_committed) {
-        throw "This transfer has already been committed";
-    }
+    // Redundant assignment to ensure that is_committed is true for the update.
+    update.is_committed = true;
     // Block commits if scheduled is invalid.
     if (update.scheduled && new Date(update.scheduled) < new Date()) {
         throw "Cannot commit a transfer past schedule";
@@ -36,7 +37,7 @@ export async function commit(
 
     const items: TransferItem[] = await pb
         .collection(PocketBaseModel.TRANSFER_ITEMS)
-        .getFullList(null, { filter: `transfer_id="${current.id}"` });
+        .getFullList(null, { filter: `transfer_id="${update.id}"` });
 
     if (update.from_warehouse_id) {
         await consumeStocks(pb, update.from_warehouse_id, items, options);
