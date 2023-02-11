@@ -4,11 +4,11 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/api/v1/_middleware.ts";
-import * as $1 from "./routes/api/v1/authentication/index.ts";
-import * as $2 from "./routes/api/v1/conversions/[from]/[into].ts";
-import * as $3 from "./routes/api/v1/conversions/_multiplier_of.ts";
-import * as $4 from "./routes/api/v1/transactions/[id]/index.ts";
-import * as $5 from "./routes/api/v1/transactions/index.ts";
+import * as $1 from "./routes/api/v1/accounting/transactions/[id]/index.ts";
+import * as $2 from "./routes/api/v1/accounting/transactions/index.ts";
+import * as $3 from "./routes/api/v1/authentication/index.ts";
+import * as $4 from "./routes/api/v1/conversions/[from]/[into].ts";
+import * as $5 from "./routes/api/v1/conversions/_multiplier_of.ts";
 import * as $6 from "./routes/api/v1/transfers/[id]/_commit.ts";
 import * as $7 from "./routes/api/v1/transfers/[id]/index.ts";
 import * as $8 from "./routes/api/v1/transfers/[id]/items/[item_id].ts";
@@ -26,11 +26,11 @@ import * as $$0 from "./islands/Sandbox.tsx";
 const manifest = {
   routes: {
     "./routes/api/v1/_middleware.ts": $0,
-    "./routes/api/v1/authentication/index.ts": $1,
-    "./routes/api/v1/conversions/[from]/[into].ts": $2,
-    "./routes/api/v1/conversions/_multiplier_of.ts": $3,
-    "./routes/api/v1/transactions/[id]/index.ts": $4,
-    "./routes/api/v1/transactions/index.ts": $5,
+    "./routes/api/v1/accounting/transactions/[id]/index.ts": $1,
+    "./routes/api/v1/accounting/transactions/index.ts": $2,
+    "./routes/api/v1/authentication/index.ts": $3,
+    "./routes/api/v1/conversions/[from]/[into].ts": $4,
+    "./routes/api/v1/conversions/_multiplier_of.ts": $5,
     "./routes/api/v1/transfers/[id]/_commit.ts": $6,
     "./routes/api/v1/transfers/[id]/index.ts": $7,
     "./routes/api/v1/transfers/[id]/items/[item_id].ts": $8,
