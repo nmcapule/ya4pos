@@ -125,6 +125,10 @@ async function consumeStocks(
     );
 }
 
+/**
+ * Create an array of warehouse item stocks to update if the given item needs
+ * to be consumed from the warehouse item stocks.
+ */
 function draftConsumedStocksUpdate(
     conversions: UnitConversion[],
     item: TransferItem,
