@@ -6,7 +6,7 @@ kill_timeout = 5
 processes = []
 
 [env]
-  POCKETBASE_URL=https://pocketbased.fly.dev/
+  POCKETBASE_URL = "https://pocketbased.fly.dev/"
 
 [experimental]
   auto_rollback = true
@@ -36,8 +36,3 @@ processes = []
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
-
-# Makes sure that your Pocketbase data persists using fly.io volumes.
-[mounts]
-source="data"
-destination="/pb_data"
