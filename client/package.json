@@ -4,6 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "NODE_OPTIONS=--openssl-legacy-provider expo start",
+    "tunnel": "NODE_OPTIONS=--openssl-legacy-provider expo start --tunnel",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "NODE_OPTIONS=--openssl-legacy-provider expo start --web"
@@ -16,6 +17,7 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-paper": "^5.2.0",
     "react-native-web": "~0.18.9"
   },
   "devDependencies": {
