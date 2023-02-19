@@ -892,10 +892,10 @@
                 }
             }
         ],
-        "listRule": null,
-        "viewRule": null,
-        "createRule": null,
-        "updateRule": null,
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "@request.auth.id != \"\"",
         "deleteRule": null,
         "options": {}
     },
@@ -959,9 +959,9 @@
                 }
             }
         ],
-        "listRule": null,
-        "viewRule": null,
-        "createRule": null,
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
+        "createRule": "@request.auth.id != \"\"",
         "updateRule": null,
         "deleteRule": null,
         "options": {}
@@ -999,8 +999,8 @@
                 }
             }
         ],
-        "listRule": null,
-        "viewRule": null,
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
         "createRule": null,
         "updateRule": null,
         "deleteRule": null,
