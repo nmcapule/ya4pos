@@ -49,6 +49,12 @@ export interface TransferItem {
     total_price?: number;
 }
 
+export interface Warehouse {
+    id?: string;
+    label?: string;
+    is_deleted?: boolean;
+}
+
 export interface WarehouseStock {
     id?: string;
     warehouse_id?: string;

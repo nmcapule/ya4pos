@@ -1,6 +1,9 @@
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
+
+import type { RootStackParamList } from "../navigation";
 import { AuthenticationService } from "../../services/authentication";
 
 async function login(username: string, password: string) {
@@ -8,7 +11,9 @@ async function login(username: string, password: string) {
     console.log(await service.login(username, password));
 }
 
-export default function LoginScreen() {
+export default function LoginScreen({
+    navigation,
+}: NativeStackScreenProps<RootStackParamList, "Hello">) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -30,7 +35,14 @@ export default function LoginScreen() {
             <Button
                 mode="outlined"
                 style={styles.submit}
-                onPress={() => login(username, password)}
+                onPress={async () => {
+                    try {
+                        await login(username, password);
+                    } catch (e: unknown) {
+                        console.error(e);
+                    }
+                    navigation.navigate("POS");
+                }}
             >
                 Submit
             </Button>

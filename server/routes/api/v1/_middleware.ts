@@ -29,7 +29,12 @@ export async function handler(
     // Instruct client to save cookie from the auth store.
     const res = await ctx.next();
     // Set cookie if authenticated to PocketBase.
-    res.headers.append("set-cookie", ctx.state.pb.authStore.exportToCookie());
+    res.headers.append(
+        "set-cookie",
+        ctx.state.pb.authStore.exportToCookie({
+            sameSite: "none",
+        })
+    );
 
     // Attach CORS header if ALLOW_CORS is set.
     if (config.ALLOW_CORS) {

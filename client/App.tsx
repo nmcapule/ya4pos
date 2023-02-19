@@ -5,6 +5,7 @@ import { linking, RootStackParamList } from "./screens/navigation";
 
 import LoginScreen from "./screens/account/Login";
 import HelloScreen from "./screens/sandbox/Hello";
+import POSScreen from "./screens/pos/POS";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -13,6 +14,7 @@ export default function App() {
         <NavigationContainer linking={linking}>
             <RootStack.Navigator initialRouteName="Hello">
                 <RootStack.Screen name="Hello" component={HelloScreen} />
+                <RootStack.Screen name="POS" component={POSScreen} />
                 <RootStack.Screen name="Login" component={LoginScreen} />
             </RootStack.Navigator>
         </NavigationContainer>

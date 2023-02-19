@@ -1,20 +1,10 @@
-import config from "../utils/config";
+import { api } from "../utils/server";
 
 export class AuthenticationService {
     async login(username: string, password: string) {
-        try {
-            return await fetch(`${config.SERVER_URL}/api/v1/authentication`, {
-                method: "POST",
-                mode: "cors",
-                credentials: "include",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-            });
-        } catch (e) {
-            console.error(e);
-        }
+        return await api("/api/v1/authentication", {
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+        });
     }
 }
