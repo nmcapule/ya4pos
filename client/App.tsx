@@ -3,9 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { linking, RootStackParamList } from "./screens/navigation";
 
-import LoginScreen from "./screens/account/Login";
 import HelloScreen from "./screens/sandbox/Hello";
+import LoginScreen from "./screens/account/Login";
 import POSScreen from "./screens/pos/POS";
+import ReviewScreen from "./screens/pos/Review";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -14,8 +15,9 @@ export default function App() {
         <NavigationContainer linking={linking}>
             <RootStack.Navigator initialRouteName="Hello">
                 <RootStack.Screen name="Hello" component={HelloScreen} />
-                <RootStack.Screen name="POS" component={POSScreen} />
                 <RootStack.Screen name="Login" component={LoginScreen} />
+                <RootStack.Screen name="POS" component={POSScreen} />
+                <RootStack.Screen name="Review" component={ReviewScreen} />
             </RootStack.Navigator>
         </NavigationContainer>
     );

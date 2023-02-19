@@ -17,7 +17,11 @@ export enum PocketBaseModel {
     WAREHOUSES = "warehouses",
 }
 
-export interface Item {
+export interface Expandable {
+    expand?: Record<string, any>;
+}
+
+export interface Item extends Expandable {
     id?: string;
     sku?: string;
     label?: string;
@@ -27,7 +31,7 @@ export interface Item {
     description?: number;
 }
 
-export interface Transfer {
+export interface Transfer extends Expandable {
     id?: string;
     transaction_id?: string;
     from_warehouse_id?: string;
@@ -39,7 +43,7 @@ export interface Transfer {
     updated_by?: string;
 }
 
-export interface TransferItem {
+export interface TransferItem extends Expandable {
     id?: string;
     transfer_id?: string;
     item_id?: string;
@@ -49,13 +53,13 @@ export interface TransferItem {
     total_price?: number;
 }
 
-export interface Warehouse {
+export interface Warehouse extends Expandable {
     id?: string;
     label?: string;
     is_deleted?: boolean;
 }
 
-export interface WarehouseStock {
+export interface WarehouseStock extends Expandable {
     id?: string;
     warehouse_id?: string;
     item_id?: string;
@@ -67,13 +71,13 @@ export interface WarehouseStock {
     expires?: string;
 }
 
-export interface UnitConversion {
+export interface UnitConversion extends Expandable {
     from_unit_id?: string;
     multiplier?: number;
     into_unit_id?: string;
 }
 
-export interface Transmute {
+export interface Transmute extends Expandable {
     transaction_id?: string;
     recipe_id?: string;
     warehouse_id?: string;
@@ -81,26 +85,26 @@ export interface Transmute {
     output_transfer_id?: string;
 }
 
-export interface Recipe {
+export interface Recipe extends Expandable {
     id?: string;
     item_id?: string;
     label?: string;
 }
 
-export interface RecipeIngredient {
+export interface RecipeIngredient extends Expandable {
     recipe_id?: string;
     item_id?: string;
     quantity?: number;
     unit_id?: string;
 }
 
-export interface AccountingEntity {
+export interface AccountingEntity extends Expandable {
     id?: string;
     label?: string;
     description?: string;
 }
 
-export interface AccountingTransaction {
+export interface AccountingTransaction extends Expandable {
     description?: string;
     amount?: number;
     from_entity_id?: string;
