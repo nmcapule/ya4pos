@@ -71,6 +71,11 @@ export interface WarehouseStock extends Expandable {
     expires?: string;
 }
 
+export interface Tag extends Expandable {
+    id?: string;
+    label?: string;
+}
+
 export interface UnitConversion extends Expandable {
     from_unit_id?: string;
     multiplier?: number;
