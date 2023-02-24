@@ -133,9 +133,6 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: "#fcfcfc",
     },
-    spacer: {
-        flexGrow: 1,
-    },
     fab: {
         position: "absolute",
         margin: 16,
