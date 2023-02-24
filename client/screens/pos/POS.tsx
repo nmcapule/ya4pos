@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Button, Card, FAB, Text } from "react-native-paper";
+import { Button, Card, Chip, FAB, List, Text } from "react-native-paper";
 
 import type { WarehouseStock } from "../../models";
 import { WarehouseService } from "../../services/warehouse";
@@ -16,28 +16,21 @@ export default function POSScreen({
     const [orders, setOrders] = useState<Record<string, number>>({});
 
     const addOrder = (stock: WarehouseStock) =>
-        setOrders({
-            ...orders,
-            [stock.id!]: (orders[stock.id!] ?? 0) + 1,
-        });
+        setOrders({ ...orders, [stock.id!]: (orders[stock.id!] ?? 0) + 1 });
     const clearOrder = (stock: WarehouseStock) =>
         confirm(
             `Clear all current orders for ${stock.expand?.item_id.label}?`
         ) && setOrders({ ...orders, [stock.id!]: 0 });
     const reviewOrders = () => navigation.navigate("Review", { orders });
 
-    const renderTitle = (stock: WarehouseStock): string =>
-        `${stock.expand?.item_id.label} - PHP ${stock.expand?.item_id.unit_price}`;
-    const renderQuantity = (stock: WarehouseStock): string => {
+    const renderQuantity = (stock: WarehouseStock) => {
         const count = orders[stock.id!] ?? 0;
-        const emoji = stock.expand?.item_id.emoji;
-        if (count > 3) {
-            return `${emoji} x${count}`;
+        if (count === 0) {
+            return "";
         }
-        return Array(count).fill(emoji).join("");
+        const icon = stock.expand?.item_id.icon;
+        return <Chip mode="outlined" icon={icon}>{`x${count}`}</Chip>;
     };
-    const showDetails = (stock: WarehouseStock) =>
-        window.alert(JSON.stringify(stock, null, 2));
 
     useEffect(() => {
         const service = new WarehouseService();
@@ -56,30 +49,25 @@ export default function POSScreen({
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.cards}>
+            <ScrollView>
                 {stocks.map((stock) => (
-                    <Card style={styles.card} key={stock.id}>
-                        <Card.Title title={renderTitle(stock)} />
-                        <Card.Content>
-                            <Text>{stock.expand?.item_id.description}</Text>
-                            <Button
-                                mode="text"
-                                onPress={() => showDetails(stock)}
-                            >
-                                Show details in JSON
-                            </Button>
-                        </Card.Content>
-                        <Card.Actions>
-                            <Button
-                                mode="text"
-                                onPress={() => clearOrder(stock)}
-                            >
-                                {renderQuantity(stock)}
-                            </Button>
-                            <View style={styles.spacer} />
-                            <Button onPress={() => addOrder(stock)}>+1</Button>
-                        </Card.Actions>
-                    </Card>
+                    <List.Item
+                        key={stock.id}
+                        title={stock.expand?.item_id.label}
+                        style={styles.item}
+                        description={`PHP ${stock.unit_price}\n${stock.expand?.item_id.description}`}
+                        onPress={() => addOrder(stock)}
+                        onLongPress={() => clearOrder(stock)}
+                        left={(props) => (
+                            <List.Icon
+                                {...props}
+                                icon={stock.expand?.item_id.icon}
+                            />
+                        )}
+                        right={(props) => (
+                            <Text {...props}>{renderQuantity(stock)}</Text>
+                        )}
+                    />
                 ))}
             </ScrollView>
             <FAB
@@ -93,16 +81,14 @@ export default function POSScreen({
 
 const styles = StyleSheet.create({
     container: {
-        // height: "100vh",
         flex: 1,
+    },
+    item: {
+        backgroundColor: "#fcfcfc",
     },
     spacer: {
         flexGrow: 1,
     },
-    cards: {
-        overflow: "scroll",
-    },
-    card: {},
     fab: {
         position: "absolute",
         margin: 16,
