@@ -20,25 +20,25 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
 
             const recipe: Recipe = await pb
                 .collection(PocketBaseModel.RECIPES)
-                .getOne(transmute.recipe_id);
+                .getOne(transmute.recipe);
 
             // Create transfer for output using recipe.
             const input = await createOutputTransfer(
                 pb,
-                transmute.transaction_id!,
-                transmute.warehouse_id!,
+                transmute.transaction!,
+                transmute.warehouse!,
                 recipe.id!
             );
-            transmute.input_transfer_id = input.id;
+            transmute.input = input.id;
 
             // Create transfer for input using recipe.
             const output = await createInputTransfer(
                 pb,
-                transmute.transaction_id!,
-                transmute.warehouse_id!,
-                recipe.item_id!
+                transmute.transaction!,
+                transmute.warehouse!,
+                recipe.item!
             );
-            transmute.output_transfer_id = output.id;
+            transmute.output = output.id;
 
             // Commit transfer for output.
             await pb
@@ -67,24 +67,24 @@ async function createOutputTransfer(
     const transfer: Transfer = await pb
         .collection(PocketBaseModel.TRANSFERS)
         .create({
-            transaction_id: transactionId,
-            from_warehouse_id: warehouseId,
+            transaction: transactionId,
+            from: warehouseId,
         });
 
     const ingredients: RecipeIngredient[] = await pb
         .collection(PocketBaseModel.RECIPE_INGREDIENTS)
         .getFullList(null, {
-            filter: `recipe_id="${recipeId}"`,
+            filter: `recipe="${recipeId}"`,
         });
     await Promise.all(
         ingredients
             .map(
                 (ing) =>
                     ({
-                        transfer_id: transfer.id,
-                        item_id: ing.item_id,
+                        transfer: transfer.id,
+                        item: ing.item,
                         quantity: ing.quantity,
-                        unit_id: ing.unit_id,
+                        unit: ing.unit,
                     } as TransferItem)
             )
             .map(
@@ -108,19 +108,19 @@ async function createInputTransfer(
     const transfer: Transfer = await pb
         .collection(PocketBaseModel.TRANSFERS)
         .create({
-            transaction_id: transactionId,
-            into_warehouse_id: warehouseId,
+            transaction: transactionId,
+            into: warehouseId,
         });
     const item: Item = await pb
         .collection(PocketBaseModel.ITEMS)
         .getOne(itemId);
     await pb.collection(PocketBaseModel.TRANSFER_ITEMS).create({
-        transfer_id: transfer.id,
-        item_id: item.id,
+        transfer: transfer.id,
+        item: item.id,
         quantity: 1,
-        unit_id: item.unit_id,
-        unit_price: item.unit_price,
-        total_price: 1 * item.unit_price!,
+        unit: item.unit,
+        unitPrice: item.unitPrice,
+        totalPrice: 1 * item.unitPrice!,
     } as TransferItem);
 
     return transfer;

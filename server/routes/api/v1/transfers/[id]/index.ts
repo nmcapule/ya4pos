@@ -14,11 +14,11 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
                 .collection(PocketBaseModel.TRANSFERS)
                 .getOne(update.id);
 
-            // Automate attaching user to the updated_by.
-            update.updated_by = pb.authStore.model.id;
+            // Automate attaching user to the updatedBy.
+            update.updatedBy = pb.authStore.model.id;
 
-            // If toggling from !is_committed into is_committed, do a commit.
-            if (update.is_committed && !current.is_committed) {
+            // If toggling from !committed into committed, do a commit.
+            if (update.committed && !current.committed) {
                 return await commit(pb, update);
             }
             // Otherwise, do a simple update.

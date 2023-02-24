@@ -2,9 +2,12 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect } from "react";
 import { View } from "react-native";
 import { DataTable, Text } from "react-native-paper";
+import { Tag } from "../../models";
 import { WarehouseService } from "../../services/warehouse";
 
 import { RootStackParamList } from "../navigation";
+
+const HARDCODED_WAREHOUSE_ID = "ffcf67ob673v8p0";
 
 export default function ReviewScreen({
     route,
@@ -18,20 +21,17 @@ export default function ReviewScreen({
                 HARDCODED_WAREHOUSE_ID,
                 new URLSearchParams({
                     filter: `is_sellable=true`,
-                    expand: `item_id.tags`,
+                    expand: `item.tags`,
                 })
             );
             const tags = stocks
-                .map((stock) => stock.expand?.item_id.expand?.tags as Tag[])
+                .map((stock) => stock.expand?.item.expand?.tags as Tag[])
                 .flat()
                 .filter((tag) => Boolean(tag))
                 .reduce(
                     (tags, tag) => ({ ...tags, [tag.id!]: tag }),
                     {} as Record<string, Tag>
                 );
-
-            setStocks(stocks);
-            setTags(Object.values(tags));
         })();
     }, []);
 

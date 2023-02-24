@@ -13,8 +13,8 @@ export const handler = async (
         .getFullList();
     try {
         const conversion: UnitConversion = {
-            from_unit_id: from,
-            into_unit_id: into,
+            from,
+            into,
             multiplier: multiplierOf(conversions, from, into),
         };
         return new Response(JSON.stringify(conversion));

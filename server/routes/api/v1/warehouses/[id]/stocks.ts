@@ -9,9 +9,8 @@ export const handler = async (
 ) => {
     return await CRUDFactory.List(PocketBaseModel.WAREHOUSE_STOCKS, {
         mutators: {
-            // Add `warehouse_id` filter.
-            filter: (f) =>
-                composeFilters([f, `warehouse_id="${ctx.params.id}"`]),
+            // Add `warehouse` filter.
+            filter: (f) => composeFilters([f, `warehouse="${ctx.params.id}"`]),
         },
     })(req, ctx);
 };

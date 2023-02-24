@@ -8,8 +8,8 @@ export const handler: Handlers<unknown, { pb: PocketBase }> = {
     POST: CRUDFactory.Create(PocketBaseModel.TRANSFERS, {
         validators: [
             assertExpression<Transfer>(
-                (v) => !v.is_committed,
-                `New transfers should have is_committed=false`
+                (v) => !v.committed,
+                `New transfers should have committed=false`
             ),
         ],
     }),

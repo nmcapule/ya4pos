@@ -18,16 +18,16 @@ export function multiplierOf(
     // Build a full two-way lookup table of unit conversions.
     const lookup = conversions.reduce((acc, curr) => {
         acc.set(
-            curr.from_unit_id!,
-            (acc.get(curr.from_unit_id!) || new Map<string, number>()).set(
-                curr.into_unit_id!,
+            curr.from!,
+            (acc.get(curr.from!) || new Map<string, number>()).set(
+                curr.into!,
                 curr.multiplier!
             )
         );
         acc.set(
-            curr.into_unit_id!,
-            (acc.get(curr.into_unit_id!) || new Map<string, number>()).set(
-                curr.from_unit_id!,
+            curr.into!,
+            (acc.get(curr.into!) || new Map<string, number>()).set(
+                curr.from!,
                 1 / curr.multiplier!
             )
         );

@@ -25,49 +25,49 @@ export interface Item extends Expandable {
     id?: string;
     sku?: string;
     label?: string;
-    unit_id?: string;
-    unit_price?: number;
-    expiry_secs?: number;
+    unit?: string;
+    unitPrice?: number;
+    expiryInSecs?: number;
     description?: number;
 }
 
 export interface Transfer extends Expandable {
     id?: string;
-    transaction_id?: string;
-    from_warehouse_id?: string;
-    into_warehouse_id?: string;
-    overhead_cost?: number;
+    transaction?: string;
+    from?: string;
+    into?: string;
+    overhead?: number;
     description?: string;
-    is_committed?: boolean;
+    committed?: boolean;
     scheduled?: string;
-    updated_by?: string;
+    updatedBy?: string;
 }
 
 export interface TransferItem extends Expandable {
     id?: string;
-    transfer_id?: string;
-    item_id?: string;
+    transfer?: string;
+    item?: string;
     quantity?: number;
-    unit_id?: string;
-    unit_price?: number;
-    total_price?: number;
+    unit?: string;
+    unitPrice?: number;
+    totalPrice?: number;
 }
 
 export interface Warehouse extends Expandable {
     id?: string;
     label?: string;
-    is_deleted?: boolean;
+    deleted?: boolean;
 }
 
 export interface WarehouseStock extends Expandable {
     id?: string;
-    warehouse_id?: string;
-    item_id?: string;
+    warehouse?: string;
+    item?: string;
     quantity?: number;
-    unit_id?: string;
-    unit_price?: number;
-    is_virtual?: boolean;
-    is_sellable?: boolean;
+    unit?: string;
+    unitPrice?: number;
+    virtual?: boolean;
+    sellable?: boolean;
     expires?: string;
 }
 
@@ -77,30 +77,30 @@ export interface Tag extends Expandable {
 }
 
 export interface UnitConversion extends Expandable {
-    from_unit_id?: string;
+    from?: string;
     multiplier?: number;
-    into_unit_id?: string;
+    into?: string;
 }
 
 export interface Transmute extends Expandable {
-    transaction_id?: string;
-    recipe_id?: string;
-    warehouse_id?: string;
-    input_transfer_id?: string;
-    output_transfer_id?: string;
+    transaction?: string;
+    recipe?: string;
+    warehouse?: string;
+    input?: string;
+    output?: string;
 }
 
 export interface Recipe extends Expandable {
     id?: string;
-    item_id?: string;
+    item?: string;
     label?: string;
 }
 
 export interface RecipeIngredient extends Expandable {
-    recipe_id?: string;
-    item_id?: string;
+    recipe?: string;
+    item?: string;
     quantity?: number;
-    unit_id?: string;
+    unit?: string;
 }
 
 export interface AccountingEntity extends Expandable {
@@ -112,6 +112,6 @@ export interface AccountingEntity extends Expandable {
 export interface AccountingTransaction extends Expandable {
     description?: string;
     amount?: number;
-    from_entity_id?: string;
-    into_entity_id?: string;
+    from?: string;
+    into?: string;
 }

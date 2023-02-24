@@ -10,20 +10,20 @@ import {
 export const handler: Handlers<unknown, { pb: PocketBase }> = {
     async GET(req: Request, ctx: HandlerContext<void, { pb: PocketBase }>) {
         return await CRUDFactory.View(PocketBaseModel.TRANSFER_ITEMS, {
-            id: "item_id",
+            id: "item",
             mutators: {
                 filter: (f) =>
-                    composeFilters([f, `transfer_id="${ctx.params.id}"`]),
+                    composeFilters([f, `transfer="${ctx.params.id}"`]),
             },
         })(req, ctx);
     },
-    // TODO(nmcapule): If is_virtual, assemble ingredients.
+    // TODO(nmcapule): If virtual, assemble ingredients.
     PUT: CRUDFactory.Update(PocketBaseModel.TRANSFER_ITEMS, {
-        id: "item_id",
+        id: "item",
         validators: [assertTransferNotCommitted, assertSameTransferId],
     }),
     DELETE: CRUDFactory.Delete(PocketBaseModel.TRANSFER_ITEMS, {
-        id: "item_id",
+        id: "item",
         validators: [assertTransferNotCommitted],
     }),
 };

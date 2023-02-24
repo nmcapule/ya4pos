@@ -28,8 +28,8 @@ export async function commit(
     update: Transfer,
     options?: Options
 ): Promise<Transfer> {
-    // Redundant assignment to ensure that is_committed is true for the update.
-    update.is_committed = true;
+    // Redundant assignment to ensure that committed is true for the update.
+    update.committed = true;
     // Block commits if scheduled is invalid.
     if (update.scheduled && new Date(update.scheduled) < new Date()) {
         throw "Cannot commit a transfer past schedule";
@@ -37,13 +37,13 @@ export async function commit(
 
     const items: TransferItem[] = await pb
         .collection(PocketBaseModel.TRANSFER_ITEMS)
-        .getFullList(null, { filter: `transfer_id="${update.id}"` });
+        .getFullList(null, { filter: `transfer="${update.id}"` });
 
-    if (update.from_warehouse_id) {
-        await consumeStocks(pb, update.from_warehouse_id, items, options);
+    if (update.from) {
+        await consumeStocks(pb, update.from, items, options);
     }
-    if (update.into_warehouse_id) {
-        await createStocks(pb, update.into_warehouse_id, items, options);
+    if (update.into) {
+        await createStocks(pb, update.into, items, options);
     }
 
     return update;
@@ -63,11 +63,11 @@ async function createStocks(
             return await pb
                 .collection(PocketBaseModel.WAREHOUSE_STOCKS)
                 .create({
-                    warehouse_id: intoWarehouseId,
-                    item_id: item.item_id,
+                    warehouse: intoWarehouseId,
+                    item: item.item,
                     quantity: item.quantity,
-                    unit_id: item.unit_id,
-                    unit_price: item.unit_price,
+                    unit: item.unit,
+                    unitPrice: item.unitPrice,
                     // TODO(nmcapule): How to handle expiry.
                     // expires: item.
                 });
@@ -93,7 +93,7 @@ async function consumeStocks(
     const stocksFromSource: WarehouseStock[] = await pb
         .collection(PocketBaseModel.WAREHOUSE_STOCKS)
         .getFullList(null, {
-            filter: `warehouse_id="${fromWarehouseId}"`,
+            filter: `warehouse="${fromWarehouseId}"`,
         });
     // Stocks needed to be updated (aka. buffered stock updates).
     const stocksToUpdate = new Map<string, WarehouseStock>();
@@ -101,7 +101,7 @@ async function consumeStocks(
     for (const item of items) {
         // Apply buffered stock updates to get virtual stocks.
         const stocks = stocksFromSource.map(
-            (stock) => stocksToUpdate.get(stock.item_id!) ?? stock
+            (stock) => stocksToUpdate.get(stock.item!) ?? stock
         );
         // Calculate more buffered stock updates based on required item.
         draftConsumedStocksUpdate(conversions, item, stocks).forEach((stock) =>
@@ -114,7 +114,7 @@ async function consumeStocks(
     return Promise.all(
         Array.from(stocksToUpdate.entries()).map(async ([_, stock]) => {
             // Clean up non-virtual stocks that have zero quantity.
-            if (!stock.is_virtual && stock.quantity! <= 0) {
+            if (!stock.virtual && stock.quantity! <= 0) {
                 return await pb
                     .collection(PocketBaseModel.WAREHOUSE_STOCKS)
                     .delete(stock.id);
@@ -137,7 +137,7 @@ function draftConsumedStocksUpdate(
 ): WarehouseStock[] {
     // Only compare with relevant and available stocks.
     stocks = stocks
-        .filter((stock) => stock.item_id === item.item_id)
+        .filter((stock) => stock.item === item.item)
         .filter((stock) => stock.quantity! > 0);
 
     const stocksToUpdate: WarehouseStock[] = [];
@@ -148,7 +148,7 @@ function draftConsumedStocksUpdate(
         // Available stock quantity, in the desired unit.
         const available =
             stock.quantity! *
-            multiplierOf(conversions, stock.unit_id!, item.unit_id!);
+            multiplierOf(conversions, stock.unit!, item.unit!);
         const consumed = Math.max(available, required);
         if (consumed <= 0) {
             continue;
@@ -157,7 +157,7 @@ function draftConsumedStocksUpdate(
         // Update available stock quantity, in the original unit.
         stock.quantity =
             (available - consumed) *
-            multiplierOf(conversions, item.unit_id!, stock.unit_id!);
+            multiplierOf(conversions, item.unit!, stock.unit!);
         stocksToUpdate.push(stock);
 
         // Decrease required stock quantity.
@@ -165,7 +165,7 @@ function draftConsumedStocksUpdate(
     }
     if (required > 0) {
         throw new Error(
-            `Insufficient stock for ${item.item_id} from source warehouse.`
+            `Insufficient stock for ${item.item} from source warehouse.`
         );
     }
 

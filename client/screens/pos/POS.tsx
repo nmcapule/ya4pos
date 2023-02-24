@@ -20,9 +20,8 @@ export default function POSScreen({
     const addOrder = (stock: WarehouseStock) =>
         setOrders({ ...orders, [stock.id!]: (orders[stock.id!] ?? 0) + 1 });
     const clearOrder = (stock: WarehouseStock) =>
-        confirm(
-            `Clear all current orders for ${stock.expand?.item_id.label}?`
-        ) && setOrders({ ...orders, [stock.id!]: 0 });
+        confirm(`Clear all current orders for ${stock.expand?.item.label}?`) &&
+        setOrders({ ...orders, [stock.id!]: 0 });
     const reviewOrders = () => navigation.navigate("Review", { orders });
 
     const renderQuantity = (stock: WarehouseStock) => {
@@ -30,7 +29,7 @@ export default function POSScreen({
         if (count === 0) {
             return "";
         }
-        const icon = stock.expand?.item_id.icon;
+        const icon = stock.expand?.item.icon;
         return <Chip mode="outlined" icon={icon}>{`x${count}`}</Chip>;
     };
 
@@ -49,12 +48,12 @@ export default function POSScreen({
             const stocks = await service.Stocks(
                 HARDCODED_WAREHOUSE_ID,
                 new URLSearchParams({
-                    filter: `is_sellable=true`,
-                    expand: `item_id.tags`,
+                    filter: `sellable=true`,
+                    expand: `item.tags`,
                 })
             );
             const tags = stocks
-                .map((stock) => stock.expand?.item_id.expand?.tags as Tag[])
+                .map((stock) => stock.expand?.item.expand?.tags as Tag[])
                 .flat()
                 .filter((tag) => Boolean(tag))
                 .reduce(
@@ -86,7 +85,7 @@ export default function POSScreen({
                 {stocks
                     .filter((stock) => {
                         if (selectedTags.size === 0) return true;
-                        const tags = stock.expand?.item_id.tags;
+                        const tags = stock.expand?.item.tags;
                         return Array.from(selectedTags).every((tag) =>
                             tags.includes(tag)
                         );
@@ -94,15 +93,15 @@ export default function POSScreen({
                     .map((stock) => (
                         <List.Item
                             key={stock.id}
-                            title={stock.expand?.item_id.label}
+                            title={stock.expand?.item.label}
                             style={styles.item}
-                            description={`PHP ${stock.unit_price}\n${stock.expand?.item_id.description}`}
+                            description={`PHP ${stock.unitPrice}\n${stock.expand?.item.description}`}
                             onPress={() => addOrder(stock)}
                             onLongPress={() => clearOrder(stock)}
                             left={(props) => (
                                 <List.Icon
                                     {...props}
-                                    icon={stock.expand?.item_id.icon}
+                                    icon={stock.expand?.item.icon}
                                 />
                             )}
                             right={(props) => (

@@ -77,7 +77,7 @@
             },
             {
                 "id": "fkboylz9",
-                "name": "is_deleted",
+                "name": "deleted",
                 "type": "bool",
                 "system": false,
                 "required": false,
@@ -100,7 +100,7 @@
         "schema": [
             {
                 "id": "zeen6huw",
-                "name": "parent_id",
+                "name": "parent",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -146,6 +146,19 @@
                 }
             },
             {
+                "id": "yx444sp0",
+                "name": "icon",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
                 "id": "iv7dlkj0",
                 "name": "label",
                 "type": "text",
@@ -160,7 +173,7 @@
             },
             {
                 "id": "gtlvguts",
-                "name": "unit_id",
+                "name": "unit",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -174,7 +187,7 @@
             },
             {
                 "id": "34fittji",
-                "name": "unit_price",
+                "name": "unitPrice",
                 "type": "number",
                 "system": false,
                 "required": false,
@@ -186,7 +199,7 @@
             },
             {
                 "id": "ecxxg2ay",
-                "name": "expiry_secs",
+                "name": "expiryInSecs",
                 "type": "number",
                 "system": false,
                 "required": false,
@@ -204,6 +217,20 @@
                 "required": false,
                 "unique": false,
                 "options": {}
+            },
+            {
+                "id": "fn9l2goh",
+                "name": "tags",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ua82mizhwhs2f9c",
+                    "cascadeDelete": false,
+                    "maxSelect": null,
+                    "displayFields": []
+                }
             }
         ],
         "listRule": "@request.auth.id != \"\"",
@@ -241,48 +268,6 @@
         "options": {}
     },
     {
-        "id": "j6hruf8977e4pxd",
-        "name": "item_tags",
-        "type": "base",
-        "system": false,
-        "schema": [
-            {
-                "id": "bwejslab",
-                "name": "item_id",
-                "type": "relation",
-                "system": false,
-                "required": true,
-                "unique": false,
-                "options": {
-                    "collectionId": "ld3rf0t2xsn659e",
-                    "cascadeDelete": true,
-                    "maxSelect": 1,
-                    "displayFields": null
-                }
-            },
-            {
-                "id": "ksch0cov",
-                "name": "tag_id",
-                "type": "relation",
-                "system": false,
-                "required": true,
-                "unique": false,
-                "options": {
-                    "collectionId": "ua82mizhwhs2f9c",
-                    "cascadeDelete": true,
-                    "maxSelect": 1,
-                    "displayFields": null
-                }
-            }
-        ],
-        "listRule": "@request.auth.id != \"\"",
-        "viewRule": "@request.auth.id != \"\"",
-        "createRule": "@request.auth.id != \"\"",
-        "updateRule": "@request.auth.id != \"\"",
-        "deleteRule": "@request.auth.id != \"\"",
-        "options": {}
-    },
-    {
         "id": "00wvt8yc3mhop2c",
         "name": "recipes",
         "type": "base",
@@ -290,7 +275,7 @@
         "schema": [
             {
                 "id": "ra2r2z0k",
-                "name": "item_id",
+                "name": "item",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -331,7 +316,7 @@
         "schema": [
             {
                 "id": "vvimucbs",
-                "name": "recipe_id",
+                "name": "recipe",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -345,7 +330,7 @@
             },
             {
                 "id": "huwzps41",
-                "name": "item_id",
+                "name": "item",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -371,7 +356,7 @@
             },
             {
                 "id": "ygdo0dxb",
-                "name": "unit_id",
+                "name": "unit",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -425,7 +410,7 @@
             },
             {
                 "id": "6tatverl",
-                "name": "is_standard",
+                "name": "standard",
                 "type": "bool",
                 "system": false,
                 "required": false,
@@ -448,7 +433,7 @@
         "schema": [
             {
                 "id": "qtszyuun",
-                "name": "warehouse_id",
+                "name": "warehouse",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -462,7 +447,7 @@
             },
             {
                 "id": "h0kylz6b",
-                "name": "item_id",
+                "name": "item",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -488,7 +473,7 @@
             },
             {
                 "id": "wvuts0qu",
-                "name": "unit_id",
+                "name": "unit",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -502,7 +487,7 @@
             },
             {
                 "id": "f07tghdj",
-                "name": "unit_price",
+                "name": "unitPrice",
                 "type": "number",
                 "system": false,
                 "required": false,
@@ -514,7 +499,7 @@
             },
             {
                 "id": "iln03xj9",
-                "name": "is_virtual",
+                "name": "virtual",
                 "type": "bool",
                 "system": false,
                 "required": false,
@@ -523,7 +508,7 @@
             },
             {
                 "id": "g5n04bje",
-                "name": "is_sellable",
+                "name": "sellable",
                 "type": "bool",
                 "system": false,
                 "required": false,
@@ -558,7 +543,7 @@
         "schema": [
             {
                 "id": "iw6wfx3o",
-                "name": "transaction_id",
+                "name": "transaction",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -572,7 +557,7 @@
             },
             {
                 "id": "meamnicd",
-                "name": "from_warehouse_id",
+                "name": "from",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -586,7 +571,7 @@
             },
             {
                 "id": "dgcypy4h",
-                "name": "into_warehouse_id",
+                "name": "into",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -600,7 +585,7 @@
             },
             {
                 "id": "qencvjnr",
-                "name": "overhead_cost",
+                "name": "overhead",
                 "type": "number",
                 "system": false,
                 "required": false,
@@ -625,7 +610,7 @@
             },
             {
                 "id": "evihvbnc",
-                "name": "is_committed",
+                "name": "committed",
                 "type": "bool",
                 "system": false,
                 "required": false,
@@ -646,7 +631,7 @@
             },
             {
                 "id": "bzikbi46",
-                "name": "updated_by",
+                "name": "updatedBy",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -674,7 +659,7 @@
         "schema": [
             {
                 "id": "wozy6gyo",
-                "name": "transfer_id",
+                "name": "transfer",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -688,7 +673,7 @@
             },
             {
                 "id": "zrr6jfn0",
-                "name": "item_id",
+                "name": "item",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -714,7 +699,7 @@
             },
             {
                 "id": "3rdtvb8o",
-                "name": "unit_id",
+                "name": "unit",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -728,7 +713,7 @@
             },
             {
                 "id": "gbpgd56d",
-                "name": "unit_price",
+                "name": "unitPrice",
                 "type": "number",
                 "system": false,
                 "required": false,
@@ -740,7 +725,7 @@
             },
             {
                 "id": "7eakgnnz",
-                "name": "total_price",
+                "name": "totalPrice",
                 "type": "number",
                 "system": false,
                 "required": false,
@@ -766,7 +751,7 @@
         "schema": [
             {
                 "id": "x79ls3zp",
-                "name": "from_unit_id",
+                "name": "from",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -792,7 +777,7 @@
             },
             {
                 "id": "c7vvanoh",
-                "name": "into_unit_id",
+                "name": "into",
                 "type": "relation",
                 "system": false,
                 "required": true,
@@ -820,7 +805,7 @@
         "schema": [
             {
                 "id": "to6vm5rk",
-                "name": "transaction_id",
+                "name": "transaction",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -834,7 +819,7 @@
             },
             {
                 "id": "etdktgns",
-                "name": "recipe_id",
+                "name": "recipe",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -844,14 +829,14 @@
                     "cascadeDelete": false,
                     "maxSelect": 1,
                     "displayFields": [
-                        "item_id",
+                        "item",
                         "label"
                     ]
                 }
             },
             {
                 "id": "8zn2eemd",
-                "name": "warehouse_id",
+                "name": "warehouse",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -865,7 +850,7 @@
             },
             {
                 "id": "zzjkaily",
-                "name": "input_transfer_id",
+                "name": "input",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -879,7 +864,7 @@
             },
             {
                 "id": "aiulgwtz",
-                "name": "output_transfer_id",
+                "name": "output",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -932,7 +917,7 @@
             },
             {
                 "id": "yrswotl9",
-                "name": "from_entity_id",
+                "name": "from",
                 "type": "relation",
                 "system": false,
                 "required": false,
@@ -946,7 +931,7 @@
             },
             {
                 "id": "x6g7mxlx",
-                "name": "into_entity_id",
+                "name": "into",
                 "type": "relation",
                 "system": false,
                 "required": false,
