@@ -1,0 +1,23 @@
+{
+  "files": {
+    "app.js": "/ya4pos/static/js/app.fcf1afc0.chunk.js",
+    "app.js.map": "/ya4pos/static/js/app.fcf1afc0.chunk.js.map",
+    "runtime~app.js": "/ya4pos/static/js/runtime~app.a8441465.js",
+    "runtime~app.js.map": "/ya4pos/static/js/runtime~app.a8441465.js.map",
+    "static/js/2.a81bf307.chunk.js": "/ya4pos/static/js/2.a81bf307.chunk.js",
+    "static/js/2.a81bf307.chunk.js.map": "/ya4pos/static/js/2.a81bf307.chunk.js.map",
+    "fonts/MaterialCommunityIcons.ttf": "/ya4pos/./fonts/MaterialCommunityIcons.ttf",
+    "favicon-16.png": "/ya4pos/favicon-16.png",
+    "favicon-32.png": "/ya4pos/favicon-32.png",
+    "favicon.ico": "/ya4pos/favicon.ico",
+    "index.html": "/ya4pos/index.html",
+    "manifest.json": "/ya4pos/manifest.json",
+    "serve.json": "/ya4pos/serve.json",
+    "static/js/2.a81bf307.chunk.js.LICENSE.txt": "/ya4pos/static/js/2.a81bf307.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime~app.a8441465.js",
+    "static/js/2.a81bf307.chunk.js",
+    "static/js/app.fcf1afc0.chunk.js"
+  ]
+}
