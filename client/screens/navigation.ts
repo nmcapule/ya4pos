@@ -11,7 +11,10 @@ export type RootStackParamList = {
 };
 
 export const linking: LinkingOptions<ReactNavigation.RootParamList> = {
-    prefixes: ["*"],
+    prefixes: [
+        "https://nmcapule-literate-parakeet-j4qvr9vv4xc5pgj-19006.preview.app.github.dev",
+        "http://nmcapule.github.dev/ya4pos",
+    ],
     config: {
         screens: {
             Hello: "hello",

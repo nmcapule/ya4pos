@@ -13,7 +13,10 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
     return (
         <NavigationContainer linking={linking}>
-            <RootStack.Navigator initialRouteName="Hello">
+            <RootStack.Navigator
+                initialRouteName="Hello"
+                screenOptions={{ animation: "none" }}
+            >
                 <RootStack.Screen name="Hello" component={HelloScreen} />
                 <RootStack.Screen name="Login" component={LoginScreen} />
                 <RootStack.Screen name="POS" component={POSScreen} />

@@ -1,6 +1,19 @@
 # Ya4POS Mobile App
 
-# Code Structure
+## Deployment
+
+We only use GH pages for now :P
+
+To deploy, just type:
+
+```sh
+$ yarn deploy
+```
+
+This deployment is based on
+https://docs.expo.dev/distribution/publishing-websites/#github-pages
+
+## Code Structure
 
 ```
 - components/

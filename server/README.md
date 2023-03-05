@@ -1,5 +1,13 @@
 # fresh project
 
+## Deployment
+
+Just type:
+
+```sh
+$ flyctl deploy
+```
+
 ### Usage
 
 Start the project:

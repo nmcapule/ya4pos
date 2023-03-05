@@ -5,6 +5,7 @@ import PocketBase from "pocketbase";
 
 const ALLOWED_ORIGINS = [
     "https://nmcapule-literate-parakeet-j4qvr9vv4xc5pgj-19006.preview.app.github.dev",
+    "https://nmcapule.github.io",
 ];
 
 interface State {
@@ -18,7 +19,7 @@ export async function handler(
     // Hijack preflight requests if ALLOW_CORS is set.
     if (config.ALLOW_CORS && req.method === "OPTIONS") {
         return new Response(null, {
-            headers: attachCORS(new Headers()),
+            headers: attachCORS(req, new Headers()),
             status: 200,
         });
     }
@@ -38,7 +39,7 @@ export async function handler(
 
     // Attach CORS header if ALLOW_CORS is set.
     if (config.ALLOW_CORS) {
-        attachCORS(res.headers);
+        attachCORS(req, res.headers);
     }
 
     return res;
@@ -58,8 +59,13 @@ async function authenticate(pb: PocketBase, req: Request) {
     }
 }
 
-function attachCORS(headers: Headers) {
-    headers.append("Access-Control-Allow-Origin", ALLOWED_ORIGINS.join("|"));
+function attachCORS(req: Request, headers: Headers) {
+    const origin = req.headers.get("origin")!;
+    if (!ALLOWED_ORIGINS.includes(origin)) {
+        return headers;
+    }
+
+    headers.append("Access-Control-Allow-Origin", origin);
     headers.append("Access-Control-Allow-Methods", "POST,PUT,GET,OPTIONS");
     headers.append("Access-Control-Allow-Headers", "Content-Type");
     headers.append("Access-Control-Allow-Credentials", "true");
