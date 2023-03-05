@@ -1,5 +1,5 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 
@@ -16,6 +16,16 @@ export default function LoginScreen({
 }: NativeStackScreenProps<RootStackParamList, "Hello">) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        const service = new AuthenticationService();
+        (async () => {
+            const user = await service.verify();
+            if (user) {
+                navigation.navigate("POS");
+            }
+        })();
+    });
 
     return (
         <View style={styles.container}>

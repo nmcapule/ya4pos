@@ -115,3 +115,10 @@ export interface AccountingTransaction extends Expandable {
     from?: string;
     into?: string;
 }
+
+export interface User {
+    username?: string;
+    email?: string;
+    name?: string;
+    avatar?: string;
+}
