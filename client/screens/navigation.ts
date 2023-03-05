@@ -17,10 +17,10 @@ export const linking: LinkingOptions<ReactNavigation.RootParamList> = {
     ],
     config: {
         screens: {
-            Hello: "hello",
-            Login: "login",
-            POS: "pos",
-            Review: "review",
+            Hello: "./hello",
+            Login: "./login",
+            POS: "./pos",
+            Review: "./review",
         },
     },
 };

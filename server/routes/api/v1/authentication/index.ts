@@ -3,6 +3,9 @@ import type PocketBase from "pocketbase";
 import { PocketBaseModel } from "@/models/index.ts";
 
 export const handler: Handlers<unknown, { pb: PocketBase }> = {
+    GET(_req: Request, ctx) {
+        return new Response(JSON.stringify(ctx.state.pb.authStore.model));
+    },
     /** Log-in the user using the passed username and password. */
     async POST(req: Request, ctx) {
         const body = await req.json();
