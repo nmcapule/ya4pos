@@ -29,10 +29,12 @@ export default function ReviewScreen({
                 })
             );
             setStocksLookup(
-                stocks.reduce(
-                    (lookup, stock) => ({ ...lookup, [stock.id!]: stock }),
-                    {} as Record<string, WarehouseStock>
-                )
+                stocks
+                    .filter((stock) => stock.quantity! > 0)
+                    .reduce(
+                        (lookup, stock) => ({ ...lookup, [stock.id!]: stock }),
+                        {} as Record<string, WarehouseStock>
+                    )
             );
         })();
     }, []);
