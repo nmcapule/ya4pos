@@ -11,7 +11,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -24,7 +23,6 @@
                 "type": "file",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "maxSelect": 1,
                     "maxSize": 5242880,
@@ -39,6 +37,9 @@
                     "thumbs": null
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `__pb_users_auth__created_idx` ON `users` (`created`)"
         ],
         "listRule": "id = @request.auth.id",
         "viewRule": "id = @request.auth.id",
@@ -68,7 +69,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -81,9 +81,11 @@
                 "type": "bool",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {}
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_hz2bw7wjh4jp3fc_created_idx` ON `warehouses` (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -104,10 +106,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "ld3rf0t2xsn659e",
                     "cascadeDelete": true,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -118,7 +120,6 @@
                 "type": "file",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "maxSelect": 1,
                     "maxSize": 5242880,
@@ -138,7 +139,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": true,
                 "options": {
                     "min": null,
                     "max": null,
@@ -151,7 +151,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -164,7 +163,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -177,10 +175,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "ly1jvrckq3qlv66",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -191,7 +189,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -203,7 +200,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -215,7 +211,6 @@
                 "type": "editor",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {}
             },
             {
@@ -224,14 +219,18 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "ua82mizhwhs2f9c",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": null,
                     "displayFields": []
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_ld3rf0t2xsn659e_created_idx` ON `items` (`created`)",
+            "CREATE UNIQUE INDEX \"idx_unique_75kespiz\" on \"items\" (\"sku\")"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -252,13 +251,15 @@
                 "type": "text",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
                     "pattern": ""
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_ua82mizhwhs2f9c_created_idx` ON `tags` (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -279,10 +280,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "ld3rf0t2xsn659e",
                     "cascadeDelete": true,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -293,13 +294,15 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
                     "pattern": ""
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_00wvt8yc3mhop2c_created_idx` ON \"recipes\" (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -320,10 +323,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "00wvt8yc3mhop2c",
                     "cascadeDelete": true,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -334,10 +337,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "ld3rf0t2xsn659e",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -348,7 +351,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -360,14 +362,17 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "ly1jvrckq3qlv66",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_wzyb950gpq9ufqn_created_idx` ON `recipe_ingredients` (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -388,7 +393,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -401,7 +405,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -414,9 +417,11 @@
                 "type": "bool",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {}
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_ly1jvrckq3qlv66_created_idx` ON `units` (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -437,10 +442,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "hz2bw7wjh4jp3fc",
                     "cascadeDelete": true,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -451,10 +456,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "ld3rf0t2xsn659e",
                     "cascadeDelete": true,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -465,7 +470,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -477,10 +481,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "ly1jvrckq3qlv66",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -491,7 +495,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -503,7 +506,6 @@
                 "type": "bool",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {}
             },
             {
@@ -512,7 +514,6 @@
                 "type": "bool",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {}
             },
             {
@@ -521,12 +522,14 @@
                 "type": "date",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": "",
                     "max": ""
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_xfamoyqlhk8ofiw_created_idx` ON \"warehouse_stocks\" (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -547,10 +550,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "ej3pitrfk9wubg8",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": []
                 }
@@ -561,10 +564,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "hz2bw7wjh4jp3fc",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -575,10 +578,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "hz2bw7wjh4jp3fc",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -589,7 +592,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -601,7 +603,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -614,7 +615,6 @@
                 "type": "bool",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {}
             },
             {
@@ -623,7 +623,6 @@
                 "type": "date",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": "",
                     "max": ""
@@ -635,14 +634,17 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "_pb_users_auth_",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": []
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_qvo25x64p2om1aj_created_idx` ON `transfers` (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -663,10 +665,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "qvo25x64p2om1aj",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -677,10 +679,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "ld3rf0t2xsn659e",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -691,7 +693,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -703,10 +704,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "ly1jvrckq3qlv66",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -717,7 +718,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -729,12 +729,14 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_owdlxgfneobsoug_created_idx` ON `transfer_items` (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -755,10 +757,10 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "ly1jvrckq3qlv66",
                     "cascadeDelete": true,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
@@ -769,7 +771,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -781,14 +782,17 @@
                 "type": "relation",
                 "system": false,
                 "required": true,
-                "unique": false,
                 "options": {
                     "collectionId": "ly1jvrckq3qlv66",
                     "cascadeDelete": true,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": null
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_5o6zu5sl036uk42_created_idx` ON `unit_conversions` (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -809,10 +813,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "ej3pitrfk9wubg8",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": []
                 }
@@ -823,10 +827,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "00wvt8yc3mhop2c",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": [
                         "item",
@@ -840,10 +844,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "hz2bw7wjh4jp3fc",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": []
                 }
@@ -854,10 +858,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "qvo25x64p2om1aj",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": []
                 }
@@ -868,14 +872,17 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "qvo25x64p2om1aj",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": []
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_zl3cz6yjzusscow_created_idx` ON `transmutes` (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -896,7 +903,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -909,7 +915,6 @@
                 "type": "number",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null
@@ -921,10 +926,10 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "8nbs1cd6oyf5k4m",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": []
                 }
@@ -935,14 +940,17 @@
                 "type": "relation",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "collectionId": "8nbs1cd6oyf5k4m",
                     "cascadeDelete": false,
+                    "minSelect": null,
                     "maxSelect": 1,
                     "displayFields": []
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_ej3pitrfk9wubg8_created_idx` ON \"accounting_transactions\" (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",
@@ -963,7 +971,6 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
@@ -976,13 +983,15 @@
                 "type": "text",
                 "system": false,
                 "required": false,
-                "unique": false,
                 "options": {
                     "min": null,
                     "max": null,
                     "pattern": ""
                 }
             }
+        ],
+        "indexes": [
+            "CREATE INDEX `_8nbs1cd6oyf5k4m_created_idx` ON \"accounting_entities\" (`created`)"
         ],
         "listRule": "@request.auth.id != \"\"",
         "viewRule": "@request.auth.id != \"\"",

@@ -2,8 +2,11 @@
 <html>
     <head>
         <title>{{ .Title }}</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.8.0-rc1/pocketbase.umd.js"></script>
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.13.1/dist/pocketbase.umd.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css"
+        />
         <script
             defer
             src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
@@ -25,6 +28,9 @@
                     } catch (_) {
                         window.pb.authStore.clear();
                     }
+                    document.cookie = window.pb.authStore.exportToCookie({
+                        httpOnly: false,
+                    });
                 }
             }
         </script>

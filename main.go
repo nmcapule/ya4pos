@@ -5,17 +5,17 @@ import (
 
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
-	views "github.com/nmcapule/ya4pos/modules"
+	"github.com/nmcapule/ya4pos/modules"
 	"github.com/nmcapule/ya4pos/modules/accounts"
+	"github.com/nmcapule/ya4pos/modules/home"
 	"github.com/nmcapule/ya4pos/modules/pos"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
-
 	"github.com/sirupsen/logrus"
 )
 
-func hook(g *echo.Group, view views.View) {
+func hook(g *echo.Group, view modules.View) {
 	if err := view.Hook(g); err != nil {
 		logrus.Fatalln("Failed to initialize hook to group: %+v", g)
 	}
@@ -43,7 +43,8 @@ func main() {
 			},
 		}))
 
-		e.Router.Renderer = &views.ViewRenderer{}
+		e.Router.Renderer = &modules.ViewRenderer{}
+		hook(e.Router.Group(""), &home.View{})
 		hook(e.Router.Group("/accounts"), &accounts.View{})
 		hook(e.Router.Group("/pos"), &pos.View{})
 
