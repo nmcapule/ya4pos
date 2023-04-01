@@ -22,5 +22,17 @@ func (v *View) Hook(g *echo.Group) error {
 			return c.Render(http.StatusOK, "pos/index.html", modules.BaseConfig{})
 		},
 	})
+	g.AddRoute(echo.Route{
+		Method: http.MethodGet,
+		Path:   "/:warehouseId",
+		Handler: func(c echo.Context) error {
+			return c.Render(http.StatusOK, "pos/pos.html", struct {
+				modules.BaseConfig
+				WarehouseID string
+			}{
+				WarehouseID: c.PathParam("warehouseId"),
+			})
+		},
+	})
 	return nil
 }
