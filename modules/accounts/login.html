@@ -1,0 +1,46 @@
+{{ define "accounts/login.html" }}
+<script>
+    async function handleLogin(event) {
+        event.preventDefault();
+        const auth = await window.pb
+            .collection("users")
+            .authWithPassword(
+                document.querySelector('input[name="username"]').value,
+                document.querySelector('input[name="password"]').value
+            );
+        document.cookie = window.pb.authStore.exportToCookie({
+            httpOnly: false,
+        });
+        location.reload();
+        return false;
+    }
+    async function handleLogout() {
+        window.pb.authStore.clear();
+        document.cookie = window.pb.authStore.exportToCookie({
+            httpOnly: false,
+        });
+        location.reload();
+    }
+</script>
+<div
+    x-data="{ isLoggedIn: false }"
+    x-init="isLoggedIn = window.pb.authStore.isValid"
+>
+    <form method="post" onsubmit="handleLogin(event)" x-show="!isLoggedIn">
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            autocomplete="username"
+        />
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        />
+        <input type="submit" value="Login" />
+    </form>
+    <button @click="handleLogout()" x-show="isLoggedIn">Logout</button>
+</div>
+{{ end }}

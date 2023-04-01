@@ -1,0 +1,12 @@
+{{ define "pos/index.html" }}
+<script>
+    async function entitiesFromPocketBase() {
+        return await window.pb.collection("items").getFullList();
+    }
+</script>
+<div x-data="{'texts': []}" x-init="texts = await entitiesFromPocketBase()">
+    <template x-for="text in texts">
+        <code x-text="JSON.stringify(text)"></code>
+    </template>
+</div>
+{{ end }}

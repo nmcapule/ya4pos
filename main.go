@@ -1,43 +1,51 @@
 package main
 
 import (
-	"embed"
-	"html/template"
-	"io"
-	"net/http"
 	"os"
 
 	"github.com/labstack/echo/v5"
+	"github.com/labstack/echo/v5/middleware"
+	views "github.com/nmcapule/ya4pos/modules"
+	"github.com/nmcapule/ya4pos/modules/accounts"
+	"github.com/nmcapule/ya4pos/modules/pos"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
-//go:embed views/*
-var f embed.FS
-
-type Template struct {
-	templates *template.Template
-}
-
-func (t *Template) Render(w io.Writer, name string, data any, c echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
+func hook(g *echo.Group, view views.View) {
+	if err := view.Hook(g); err != nil {
+		logrus.Fatalln("Failed to initialize hook to group: %+v", g)
+	}
 }
 
 func main() {
 	app := pocketbase.New()
 
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-		e.Router.Renderer = &Template{
-			templates: template.Must(template.ParseFS(f, "views/base_layout.html", "views/sample_content.html")),
-		}
-		e.Router.Group("/test").GET("/a", func(c echo.Context) error {
-			return c.Render(http.StatusOK, "base_layout.html", map[string]any{
-				"PageTitle": "OHSHIT",
-			})
-		})
+		log := logrus.New()
+		e.Router.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
+			LogError:  true,
+			LogURI:    true,
+			LogStatus: true,
+			LogValuesFunc: func(c echo.Context, values middleware.RequestLoggerValues) error {
+				if values.Status >= 400 {
+					log.WithFields(logrus.Fields{
+						"URI":    values.URI,
+						"status": values.Status,
+						"error":  values.Error,
+					}).Error("request")
+				}
+
+				return nil
+			},
+		}))
+
+		e.Router.Renderer = &views.ViewRenderer{}
+		hook(e.Router.Group("/accounts"), &accounts.View{})
+		hook(e.Router.Group("/pos"), &pos.View{})
 
 		// serves static files from the provided public dir (if exists)
 		e.Router.GET("/*", apis.StaticDirectoryHandler(os.DirFS("./pb_public"), false))
@@ -45,5 +53,5 @@ func main() {
 		return nil
 	})
 
-	log.Fatal(app.Start())
+	logrus.Fatal(app.Start())
 }

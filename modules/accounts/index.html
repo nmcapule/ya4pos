@@ -1,0 +1,10 @@
+{{ define "accounts/index.html" }}
+<script>
+    function init() {
+        console.log("hello");
+        console.log("alpine", Alpine);
+        console.log("pocketbase", PocketBase);
+    }
+</script>
+<div x-init="init()">hello</div>
+{{ end }}
