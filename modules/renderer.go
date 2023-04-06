@@ -61,9 +61,10 @@ type ViewRenderer struct {
 
 func NewViewRenderer(livereload bool) *ViewRenderer {
 	vr := &ViewRenderer{
-		templates: template.Must(template.ParseGlob("modules/**/*.html")),
+		templates: templates,
 	}
 	if livereload {
+		vr.templates = template.Must(template.ParseGlob("modules/**/*.html"))
 		watcher := setupWatcher("modules", func(event fsnotify.Event) error {
 			if !event.Has(fsnotify.Write) {
 				return nil
@@ -80,11 +81,6 @@ func NewViewRenderer(livereload bool) *ViewRenderer {
 	}
 
 	return vr
-}
-
-func (vr *ViewRenderer) watchTemplates() {
-	vr.templatesMu.Lock()
-	vr.templatesMu.Unlock()
 }
 
 // Render renders a template document.

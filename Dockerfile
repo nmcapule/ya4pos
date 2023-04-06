@@ -16,6 +16,7 @@ FROM alpine
 
 # Copy executable from builder.
 COPY --from=builder /usr/local/bin/myapp /usr/local/bin/myapp
+COPY --from=builder /src/myapp/pb_public /pb_public
 
 RUN apk add bash
 
