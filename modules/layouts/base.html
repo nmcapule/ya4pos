@@ -1,12 +1,14 @@
 {{ define "layouts/base.html" }}
 <html>
     <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>{{ .Title }}</title>
         <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.13.1/dist/pocketbase.umd.min.js"></script>
         <link
             rel="stylesheet"
             href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css"
         />
+        <link rel="stylesheet" href="/styles.css" />
         <script
             defer
             src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"

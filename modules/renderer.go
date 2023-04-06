@@ -59,23 +59,25 @@ type ViewRenderer struct {
 	templates   *template.Template
 }
 
-func NewViewRenderer() *ViewRenderer {
+func NewViewRenderer(livereload bool) *ViewRenderer {
 	vr := &ViewRenderer{
 		templates: template.Must(template.ParseGlob("modules/**/*.html")),
 	}
-	watcher := setupWatcher("modules", func(event fsnotify.Event) error {
-		if !event.Has(fsnotify.Write) {
+	if livereload {
+		watcher := setupWatcher("modules", func(event fsnotify.Event) error {
+			if !event.Has(fsnotify.Write) {
+				return nil
+			}
+			if strings.Contains(event.Name, ".html") {
+				log.Println("Modified HTML file:", event.Name)
+				vr.templatesMu.Lock()
+				vr.templates = template.Must(template.ParseGlob("modules/**/*.html"))
+				vr.templatesMu.Unlock()
+			}
 			return nil
-		}
-		if strings.Contains(event.Name, ".html") {
-			log.Println("Modified HTML file:", event.Name)
-			vr.templatesMu.Lock()
-			vr.templates = template.Must(template.ParseGlob("modules/**/*.html"))
-			vr.templatesMu.Unlock()
-		}
-		return nil
-	})
-	vr.watcher = watcher
+		})
+		vr.watcher = watcher
+	}
 
 	return vr
 }

@@ -4,6 +4,8 @@
         display: flex;
         padding: 6px;
         gap: 6px;
+        /* let's hide this for now */
+        display: none;
     }
     .tags-container > .tag-item {
         border-radius: 100rem;
@@ -14,9 +16,68 @@
         display: flex;
         flex-direction: column;
         align-items: stretch;
+        gap: 4px;
+        margin: 0 4px;
     }
     .stocks-container > .stock-item {
         display: flex;
+        box-shadow: 1px 1px 2px var(--color-grey);
+        border-radius: 4px;
+        padding: 4px;
+        position: relative;
+    }
+    .stock-item > .image {
+        width: 96px;
+        height: 96px;
+        outline: 1px dashed var(--color-grey);
+        margin: 2px;
+        position: relative;
+    }
+    .stock-item > .image > .price {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 64px;
+        color: var(--color-light);
+        background-color: var(--color-primary);
+        border-radius: 100px;
+        text-align: center;
+        font-size: 0.8em;
+        margin: 2px;
+    }
+    .stock-item > .description > .name {
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+    .stock-item > .action {
+        display: flex;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 8px;
+    }
+    .stock-item > .action > button {
+        padding: 4px;
+        width: 64px;
+        background-color: var(--color-primary);
+        border-radius: 20px;
+        margin: 0;
+    }
+    .stock-item > .action > .price {
+        margin: auto 8px;
+        font-size: 1.2em;
+        color: var(--color-primary);
+        border: 1px dashed var(--color-primary);
+        padding: 0 4px;
+        min-width: 96px;
+        border-radius: 8px;
+        text-align: right;
+    }
+    .stock-item > .action > .current {
+        width: 48px;
+        margin: auto;
+        text-align: center;
+        font-size: 1.2em;
     }
 </style>
 <script>
@@ -35,6 +96,7 @@
         'tags': [],
         'selectedTags': {},
         'stocks': [],
+        'orders': {},
     }"
 >
     <div class="tags-container" x-init="tags = await retrieveTags()">
@@ -54,7 +116,36 @@
     </div>
     <div class="stocks-container" x-init="stocks = await retrieveStocks()">
         <template x-for="stock in stocks">
-            <div class="stock-item" x-text="stock.expand.item.label"></div>
+            <div class="stock-item">
+                <div class="image">
+                    <div class="price" x-text="'PHP' + stock.unitPrice"></div>
+                </div>
+                <div class="description">
+                    <div class="name" x-text="stock.expand.item.label"></div>
+                    <div class="sku" x-text="stock.expand.item.sku"></div>
+                </div>
+                <div class="action">
+                    <div
+                        class="price"
+                        x-show="(orders[stock.id]??0) > 0"
+                        x-text="'PHP' + stock.unitPrice * orders[stock.id]??0"
+                    ></div>
+                    <button
+                        class="decrease"
+                        :disabled="(orders[stock.id]??0) <= 0"
+                        @click="orders[stock.id] = (orders[stock.id]??0) - 1"
+                    >
+                        -1
+                    </button>
+                    <div class="current" x-text="orders[stock.id] || '-'"></div>
+                    <button
+                        class="increase"
+                        @click="orders[stock.id] = (orders[stock.id]??0) + 1"
+                    >
+                        +1
+                    </button>
+                </div>
+            </div>
         </template>
         <div x-show="stocks.length == 0">
             <p>No stocks found.</p>
