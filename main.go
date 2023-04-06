@@ -43,7 +43,7 @@ func main() {
 			},
 		}))
 
-		e.Router.Renderer = &modules.ViewRenderer{}
+		e.Router.Renderer = modules.NewViewRenderer()
 		hook(e.Router.Group(""), &home.View{})
 		hook(e.Router.Group("/accounts"), &accounts.View{})
 		hook(e.Router.Group("/pos"), &pos.View{})

@@ -3,6 +3,7 @@ module github.com/nmcapule/ya4pos
 go 1.20
 
 require (
+	github.com/fsnotify/fsnotify v1.6.0
 	github.com/labstack/echo/v5 v5.0.0-20220201181537-ed2888cfa198
 	github.com/pocketbase/pocketbase v0.14.0
 	github.com/sirupsen/logrus v1.9.0
