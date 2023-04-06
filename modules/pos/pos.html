@@ -1,0 +1,64 @@
+{{ define "pos/pos.html" }}
+<style>
+    .tags-container {
+        display: flex;
+        padding: 6px;
+        gap: 6px;
+    }
+    .tags-container > .tag-item {
+        border-radius: 100rem;
+        padding: 4px 16px;
+        width: auto;
+    }
+    .stocks-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .stocks-container > .stock-item {
+        display: flex;
+    }
+</style>
+<script>
+    async function retrieveTags() {
+        return await window.pb.collection("tags").getFullList({});
+    }
+    async function retrieveStocks() {
+        return await window.pb.collection("warehouse_stocks").getFullList({
+            filter: 'warehouse="{{ .WarehouseID }}"',
+            expand: "item",
+        });
+    }
+</script>
+<div
+    x-data="{
+        'tags': [],
+        'selectedTags': {},
+        'stocks': [],
+    }"
+>
+    <div class="tags-container" x-init="tags = await retrieveTags()">
+        <template x-for="tag in tags">
+            <button
+                class="tag-item"
+                x-text="tag.label"
+                @click="selectedTags = {
+                    ...selectedTags,
+                    [tag.id]: !selectedTags[tag.id],
+                }"
+                :class="{
+                    'outline': !selectedTags[tag.id],
+                }"
+            ></button>
+        </template>
+    </div>
+    <div class="stocks-container" x-init="stocks = await retrieveStocks()">
+        <template x-for="stock in stocks">
+            <div class="stock-item" x-text="stock.expand.item.label"></div>
+        </template>
+        <div x-show="stocks.length == 0">
+            <p>No stocks found.</p>
+        </div>
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,24 @@
+{{ define "pos/index.html" }}
+<script>
+    async function retrieveWarehouses() {
+        return window.pb.collection("warehouses").getFullList({
+            filter: "deleted=false",
+        });
+    }
+</script>
+<div
+    x-data="{
+        'warehouses': [],
+    }"
+    x-init="warehouses = await retrieveWarehouses()"
+>
+    <template x-for="warehouse in warehouses">
+        <div>
+            <a :href="'/pos/'+warehouse.id" x-text="warehouse.label"></a>
+        </div>
+    </template>
+    <div x-show="warehouses.length == 0">
+        <p>No warehouses found.</p>
+    </div>
+</div>
+{{ end }}

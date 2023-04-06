@@ -1,0 +1,77 @@
+{{ define "accounts/login.html" }}
+<script>
+    async function handleLogin(event) {
+        event.preventDefault();
+        try {
+            const auth = await window.pb
+                .collection("users")
+                .authWithPassword(
+                    document.querySelector('input[name="username"]').value,
+                    document.querySelector('input[name="password"]').value
+                );
+        } catch (error) {
+            return error;
+        }
+        document.cookie = window.pb.authStore.exportToCookie({
+            httpOnly: false,
+        });
+        location.reload();
+        return false;
+    }
+    async function handleLogout() {
+        window.pb.authStore.clear();
+        document.cookie = window.pb.authStore.exportToCookie({
+            httpOnly: false,
+        });
+        location.reload();
+    }
+</script>
+<style>
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .login-form form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 400px;
+    }
+    .login-form form input {
+        width: 100%;
+        max-width: 400px;
+        margin: 0.5rem 0;
+    }
+</style>
+<div
+    x-data="{ isLoggedIn: false, error: null }"
+    x-init="isLoggedIn = window.pb.authStore.isValid"
+    class="login-form"
+>
+    <form
+        method="post"
+        @submit="error = handleLogin(event)"
+        x-show="!isLoggedIn"
+    >
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            autocomplete="username"
+        />
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        />
+        <input type="submit" value="Login" />
+    </form>
+    <button @click="handleLogout()" x-show="isLoggedIn">Logout</button>
+    <code x-text="error" x-show="error"></code>
+</div>
+{{ end }}
