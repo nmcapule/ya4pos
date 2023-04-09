@@ -3,6 +3,7 @@ package modules
 import (
 	"bytes"
 	"embed"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -24,9 +25,21 @@ var ErrMustImplementPageConfig = errors.New("the passed data is required to impl
 
 //go:embed */*.html
 var efs embed.FS
-var templates = template.Must(template.ParseFS(efs, "*/*.html"))
+var templates = template.Must(templateWithFuncs().ParseFS(efs, "*/*.html"))
 
 const defaultLayout = "layouts/base.html"
+
+func templateWithFuncs() *template.Template {
+	return template.New("").Funcs(template.FuncMap{
+		"json": func(data any) string {
+			s, err := json.Marshal(data)
+			if err != nil {
+				log.Error(err)
+			}
+			return string(s)
+		},
+	})
+}
 
 // PageConfig is the data that will be passed to the template.
 type PageConfig interface {
@@ -64,7 +77,7 @@ func NewViewRenderer(livereload bool) *ViewRenderer {
 		templates: templates,
 	}
 	if livereload {
-		vr.templates = template.Must(template.ParseGlob("modules/**/*.html"))
+		vr.templates = template.Must(templateWithFuncs().ParseGlob("modules/**/*.html"))
 		watcher := setupWatcher("modules", func(event fsnotify.Event) error {
 			if !event.Has(fsnotify.Write) {
 				return nil
@@ -72,7 +85,7 @@ func NewViewRenderer(livereload bool) *ViewRenderer {
 			if strings.Contains(event.Name, ".html") {
 				log.Println("Modified HTML file:", event.Name)
 				vr.templatesMu.Lock()
-				vr.templates = template.Must(template.ParseGlob("modules/**/*.html"))
+				vr.templates = template.Must(templateWithFuncs().ParseGlob("modules/**/*.html"))
 				vr.templatesMu.Unlock()
 			}
 			return nil

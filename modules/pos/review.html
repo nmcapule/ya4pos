@@ -1,0 +1,43 @@
+{{ define "pos/review.html" }}
+<styles></styles>
+<script>
+    async function retrieveStocks() {
+        return await window.pb.collection("warehouse_stocks").getFullList({
+            filter: 'warehouse="{{ .WarehouseID }}"',
+            expand: "item",
+        });
+    }
+</script>
+<div
+    x-data="{
+        'stocks': [],
+        'orders': {{ .Orders | json }},
+    }"
+    class="page-container"
+    x-init="stocks = await retrieveStocks()"
+>
+    <table x-show="stocks">
+        <thead>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+        </thead>
+        <tbody>
+            <template x-for="order in orders">
+                <tr
+                    x-data="{'stock': null}"
+                    x-effect="stock = stocks.find(stock => stock.id === order.stock)"
+                    x-show="stock"
+                >
+                    <td x-text="stock?.expand?.item?.label"></td>
+                    <td x-text="order.quantity"></td>
+                    <td x-text="stock?.unitPrice"></td>
+                    <td x-text="'PHP '+stock?.unitPrice * order.quantity"></td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+    <button>Checkout</button>
+</div>
+{{ end }}

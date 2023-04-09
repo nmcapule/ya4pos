@@ -2,6 +2,7 @@
 package pos
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/labstack/echo/v5"
@@ -32,6 +33,26 @@ func (v *View) Hook(g *echo.Group) error {
 			}{
 				WarehouseID: c.PathParam("warehouseId"),
 			})
+		},
+	})
+	g.AddRoute(echo.Route{
+		Method: http.MethodPost,
+		Path:   "/review",
+		Handler: func(c echo.Context) error {
+			c.Request().ParseForm()
+			var data struct {
+				modules.BaseConfig
+				WarehouseID string `json:"warehouse"`
+				Orders      []struct {
+					Stock    string `json:"stock"`
+					Quantity int    `json:"quantity"`
+				} `json:"orders"`
+			}
+			if err := json.Unmarshal([]byte(c.FormValue("body")), &data); err != nil {
+				c.JSON(http.StatusBadRequest, err)
+			}
+			return c.Render(http.StatusOK, "pos/review.html", data)
+
 		},
 	})
 	return nil
