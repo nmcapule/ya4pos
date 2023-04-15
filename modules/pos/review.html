@@ -1,5 +1,9 @@
 {{ define "pos/review.html" }}
-<styles></styles>
+<style>
+    .checkout {
+        background-color: var(--color-primary);
+    }
+</style>
 <script>
     async function retrieveStocks() {
         return await window.pb.collection("warehouse_stocks").getFullList({
@@ -38,6 +42,6 @@
             </template>
         </tbody>
     </table>
-    <button>Checkout</button>
+    <button class="checkout">Checkout</button>
 </div>
 {{ end }}

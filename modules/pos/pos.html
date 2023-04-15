@@ -219,10 +219,15 @@
             type="button"
             class="reset"
             @click="if (confirm('Reset orders?')) orders = {}"
+            :disabled="Object.values(orders).map(Number).reduce((a,c)=>a+c,0) === 0"
         >
             Reset
         </button>
-        <button type="submit" class="checkout">
+        <button
+            type="submit"
+            class="checkout"
+            :disabled="Object.values(orders).map(Number).reduce((a,c)=>a+c,0) === 0"
+        >
             Review (
             <span
                 x-text="Object.values(orders).map(Number).reduce((a,c)=>a+c,0)"
