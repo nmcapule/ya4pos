@@ -14,7 +14,9 @@ type UnitConverter struct {
 
 // NewUnitConverter creates a new unit converter.
 func NewUnitConverter(dao *daos.Dao) (*UnitConverter, error) {
-	uc := &UnitConverter{}
+	uc := &UnitConverter{
+		table: make(map[string]map[string]float64),
+	}
 	return uc, uc.Refresh(dao)
 }
 
