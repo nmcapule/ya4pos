@@ -52,7 +52,9 @@ func main() {
 		e.Router.Renderer = modules.NewViewRenderer(enableLiveReload)
 		hook(e.Router.Group(""), &home.View{})
 		hook(e.Router.Group("/accounts"), &accounts.View{})
-		hook(e.Router.Group("/pos"), &pos.View{})
+		hook(e.Router.Group("/pos"), &pos.View{
+			App: app,
+		})
 
 		// serves static files from the provided public dir (if exists)
 		e.Router.GET("/*", apis.StaticDirectoryHandler(os.DirFS("./pb_public"), false))

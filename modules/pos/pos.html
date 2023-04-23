@@ -107,7 +107,7 @@
         border-color: var(--color-dark);
         color: var(--color-dark);
     }
-    .actions-container > .checkout {
+    .actions-container > .review {
         background-color: var(--color-primary);
     }
 </style>
@@ -121,7 +121,7 @@
             expand: "item",
         });
     }
-    async function checkout(form) {
+    async function review(form) {
         form.submit();
     }
 </script>
@@ -225,7 +225,7 @@
         </button>
         <button
             type="submit"
-            class="checkout"
+            class="review"
             :disabled="Object.values(orders).map(Number).reduce((a,c)=>a+c,0) === 0"
         >
             Review (

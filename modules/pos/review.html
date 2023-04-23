@@ -12,14 +12,17 @@
         });
     }
 </script>
-<div
+<form
     x-data="{
         'stocks': [],
         'orders': {{ .Orders | json }},
     }"
     class="page-container"
     x-init="stocks = await retrieveStocks()"
+    method="post"
+    action="/pos/checkout"
 >
+    <input type="hidden" name="body" value="{{ . | json }}" />
     <table x-show="stocks">
         <thead>
             <th>Item</th>
@@ -42,6 +45,6 @@
             </template>
         </tbody>
     </table>
-    <button class="checkout">Checkout</button>
-</div>
+    <button type="submit" class="checkout">Checkout</button>
+</form>
 {{ end }}
