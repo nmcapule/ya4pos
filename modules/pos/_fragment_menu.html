@@ -1,0 +1,22 @@
+{{ define "pos/_fragment_menu.html" }}
+<style>
+    .menu-fragment {
+        background-color: var(--color-brand-dark-snow);
+    }
+</style>
+<div class="menu-fragment" x-data="{ items: [] }">
+    <div class="mf-items">
+        <template x-for="item in items" :key="item.id">
+            <div class="mf-item">
+                <div class="mf-item-image"></div>
+                <div class="mf-item-name" x-text="item.name"></div>
+                <div class="mf-item-price" x-text="item.price"></div>
+                <div class="mf-item-add" @click="addToOrder(item)">Add</div>
+            </div>
+        </template>
+    </div>
+    <div class="mf-actions">
+        <div>My tags</div>
+    </div>
+</div>
+{{ end }}

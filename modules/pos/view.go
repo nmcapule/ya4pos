@@ -43,7 +43,7 @@ func (v *View) Hook(g *echo.Group) error {
 		Method: http.MethodGet,
 		Path:   "/:warehouseId",
 		Handler: func(c echo.Context) error {
-			return c.Render(http.StatusOK, "pos/pos.html", struct {
+			return c.Render(http.StatusOK, "pos/pos2.html", struct {
 				modules.BaseConfig
 				WarehouseID string
 			}{

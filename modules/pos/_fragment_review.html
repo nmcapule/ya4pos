@@ -1,0 +1,211 @@
+{{ define "pos/_fragment_review.html" }}
+<script>
+    document.addEventListener("alpine:init", () => {
+        Alpine.store(
+            "orders",
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => ({
+                id: i,
+                name: `hello ${i}`,
+                quantity: 3,
+                price: 123,
+                get computedPrice() {
+                    return this.quantity * this.price;
+                },
+            }))
+        );
+        Alpine.store("service", {
+            stocks: [],
+            init() {
+                this.stocks = [];
+            },
+            async refresh() {
+                this.stocks = await window.pb
+                    .collection("warehouse_stocks")
+                    .getFullList({
+                        filter: 'warehouse="{{ .WarehouseID }}"',
+                        expand: "item",
+                    });
+            },
+        });
+    });
+</script>
+<div class="review-fragment">
+    <div class="rf-title">Review Orders</div>
+    <div class="rf-scroller">
+        <table class="rf-table">
+            <thead class="rf-header">
+                <tr>
+                    <th class="rf-header-details">Ordered Item Details</th>
+                    <th class="rf-header-qty">Qty</th>
+                    <th class="rf-header-price">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="order in $store.orders" :key="order.id">
+                    <tr class="rf-item">
+                        <td class="rf-item-details">
+                            <div class="image"></div>
+                            <div class="col">
+                                <div class="name" x-text="order.name"></div>
+                                <div class="description">
+                                    Lorem Ipsum Dolor Sit Amet
+                                </div>
+                            </div>
+                        </td>
+                        <td class="rf-item-qty">
+                            <div x-text="order.quantity"></div>
+                        </td>
+                        <td class="rf-item-price">
+                            <div x-text="order.computedPrice"></div>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    <div class="rf-summary">
+        <table class="rf-summary-table">
+            <tbody>
+                <tr class="rf-summary-subtotal">
+                    <td class="key">Subtotal</td>
+                    <td class="value">123</td>
+                </tr>
+                <tr class="rf-summary-discount">
+                    <td class="key">Discount</td>
+                    <td class="value">123</td>
+                </tr>
+                <tr class="rf-summary-divider">
+                    <td class="key"></td>
+                    <td class="value">---</td>
+                </tr>
+                <tr class="rf-summary-total">
+                    <td class="key">Total</td>
+                    <td class="value">123</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="rf-confirm">Confirm</div>
+</div>
+<style>
+    .review-fragment {
+        background-color: var(--color-brand-white);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin: 16px;
+        position: relative;
+    }
+
+    .rf-title {
+        font-size: var(--size-title);
+        margin-bottom: 16px;
+    }
+    .rf-scroller {
+        flex: 1;
+        width: 100%;
+        overflow-y: auto;
+    }
+    .rf-table {
+        width: 100%;
+    }
+    .rf-header th {
+        font-size: 1.1em;
+        font-weight: normal;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        position: sticky;
+        top: 0;
+        background-color: var(--color-brand-white);
+    }
+    .rf-header-details {
+        text-align: left;
+    }
+    .rf-header-qty {
+        width: 48px;
+    }
+    .rf-header-price {
+        width: 80px;
+    }
+
+    .rf-item {
+        height: 48px;
+    }
+    .rf-item-details {
+        display: flex;
+        align-items: stretch;
+        margin: 4px;
+    }
+    .rf-item-details > .col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 8px;
+    }
+    .rf-item-details > .col > .description {
+        color: var(--color-brand-silver);
+    }
+    .rf-item-details > .image {
+        width: 48px;
+        height: 48px;
+        background-color: var(--color-brand-dark-smoke);
+        border-radius: 48px;
+    }
+    .rf-item-qty > div,
+    .rf-item-price > div {
+        background-color: var(--color-brand-dark-smoke);
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .rf-item-qty > div {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+    .rf-item-price > div {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    .rf-summary {
+        background-color: var(--color-brand-dark-snow);
+        height: 120px;
+        border-radius: 8px;
+        margin-top: 24px;
+        display: flex;
+        align-items: stretch;
+        justify-content: end;
+    }
+
+    .rf-summary-table {
+        margin: 12px 0;
+    }
+
+    .rf-summary-table .key {
+        width: 120px;
+    }
+
+    .rf-summary-table .value {
+        width: 80;
+        text-align: center;
+    }
+
+    .rf-summary-table .rf-summary-total > .value {
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+
+    .rf-confirm {
+        background-color: var(--color-brand-silver);
+        border-radius: 2px;
+        height: 36px;
+        margin-top: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--color-brand-white);
+        font-size: 1.1em;
+    }
+</style>
+{{ end }}
