@@ -1,17 +1,27 @@
 {{ define "pos/_fragment_menu.html" }}
-<style>
-    .menu-fragment {
-        background-color: var(--color-brand-dark-snow);
-    }
-</style>
-<div class="menu-fragment" x-data="{ items: [] }">
+<script>
+    document.addEventListener("alpine:init", () => {
+        Alpine.store(
+            "stocks",
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => ({
+                id: i,
+                name: `hello ${i}`,
+                quantity: 3,
+                price: 123,
+                get computedPrice() {
+                    return this.quantity * this.price;
+                },
+            }))
+        );
+    });
+</script>
+<div class="menu-fragment" x-init>
     <div class="mf-items">
-        <template x-for="item in items" :key="item.id">
+        <template x-for="item in $store.stocks" :key="item.id">
             <div class="mf-item">
                 <div class="mf-item-image"></div>
                 <div class="mf-item-name" x-text="item.name"></div>
                 <div class="mf-item-price" x-text="item.price"></div>
-                <div class="mf-item-add" @click="addToOrder(item)">Add</div>
             </div>
         </template>
     </div>
@@ -19,4 +29,57 @@
         <div>My tags</div>
     </div>
 </div>
+<style>
+    .menu-fragment {
+        background-color: var(--color-brand-dark-snow);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    .mf-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        padding: 32px 16px;
+        justify-content: center;
+        flex: 1;
+        overflow-y: auto;
+    }
+    .mf-item {
+        height: 200px;
+        width: 200px;
+        background-color: var(--color-brand-white);
+        border-radius: 12px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0px 0px 4px var(--color-brand-extra-dark-smoke);
+    }
+    .mf-item:hover {
+        cursor: pointer;
+        box-shadow: 0px 0px 8px var(--color-brand-silver);
+    }
+    .mf-item:active {
+        box-shadow: 0px 0px 1px var(--color-brand-extra-dark-snow);
+    }
+    .mf-item-image {
+        width: 164px;
+        height: 164px;
+        border-radius: 100px;
+        background-color: var(--color-brand-extra-dark-smoke);
+        position: absolute;
+        left: 18px;
+        top: -24px;
+    }
+    .mf-item-name {
+        margin-top: 146px;
+        font-size: 1.1em;
+    }
+    .mf-item-price {
+        color: var(--color-brand-silver);
+    }
+    .mf-actions {
+    }
+</style>
 {{ end }}
