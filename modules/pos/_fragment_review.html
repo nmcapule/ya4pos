@@ -3,7 +3,7 @@
     document.addEventListener("alpine:init", () => {
         Alpine.store(
             "orders",
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => ({
+            [].map((i) => ({
                 id: i,
                 name: `hello ${i}`,
                 quantity: 3,
@@ -41,6 +41,11 @@
                 </tr>
             </thead>
             <tbody>
+                <template x-if="!$store.orders?.length">
+                    <tr>
+                        <td class="rf-empty" colspan="3">No orders here...</td>
+                    </tr>
+                </template>
                 <template x-for="order in $store.orders" :key="order.id">
                     <tr class="rf-item">
                         <td class="rf-item-details">
@@ -166,6 +171,10 @@
     .rf-item-price > div {
         border-top-right-radius: 8px;
         border-bottom-right-radius: 8px;
+    }
+    .rf-empty {
+        text-align: center;
+        color: var(--color-brand-silver);
     }
 
     .rf-summary {
